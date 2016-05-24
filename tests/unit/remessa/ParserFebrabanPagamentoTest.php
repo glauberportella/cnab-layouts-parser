@@ -21,6 +21,7 @@
 
 use CnabParser\Parser\Layout;
 use CnabParser\Model\Remessa;
+use CnabParser\Model\Lote;
 use CnabParser\Output\RemessaFile;
 
 class ParserFebrabanPagamentoTest extends \PHPUnit_Framework_TestCase
@@ -38,85 +39,61 @@ class ParserFebrabanPagamentoTest extends \PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('CnabParser\Model\Remessa', $remessa);
 		
 		// preenche campos
-		$remessa->header_arquivo->codigo_banco = 341;
-		//$remessa->header_arquivo->lote_servico = 0;
-		//$remessa->header_arquivo->tipo_registro = 0;
-		$remessa->header_arquivo->exclusivo_febraban_01 = '';
-		$remessa->header_arquivo->tipo_inscricao_empresa = 2;
-		$remessa->header_arquivo->numero_inscricao_empresa = '05346078000186';
-		$remessa->header_arquivo->codigo_convenio_banco = '0';
-		$remessa->header_arquivo->agencia_mantenedora_conta = '2932';
-		$remessa->header_arquivo->digito_verificador_agencia = '';
-		$remessa->header_arquivo->numero_conta_corrente = '24992';
-		$remessa->header_arquivo->digito_verificador_conta = '9';
-		$remessa->header_arquivo->digito_verificador_agencia_conta = '';
-		$remessa->header_arquivo->nome_empresa = 'MACWEB SOLUTIONS LTDA';
-		$remessa->header_arquivo->nome_banco = 'BANCO ITAU SA';
-		$remessa->header_arquivo->exclusivo_febraban_02 = '';
-		$remessa->header_arquivo->codigo_remessa_retorno = '1';
-		$remessa->header_arquivo->data_geracao_arquivo = date('dmY');
-		$remessa->header_arquivo->hora_geracao_arquivo = date('His');
-		$remessa->header_arquivo->numero_sequencial_arquivo = '1';
-		//$remessa->header_arquivo->versao_layout_arquivo = '091';
-		$remessa->header_arquivo->densidade_gravacao_arquivo = '1600';
-		$remessa->header_arquivo->reservado_banco_01 = '';
-		$remessa->header_arquivo->reservado_empresa_01 = '';
-		$remessa->header_arquivo->exclusivo_febraban_03 = '';
+		$remessa->header->codigo_banco = 341;
+		$remessa->header->exclusivo_febraban_01 = '';
+		$remessa->header->tipo_inscricao_empresa = 2;
+		$remessa->header->numero_inscricao_empresa = '05346078000186';
+		$remessa->header->codigo_convenio_banco = '0';
+		$remessa->header->agencia_mantenedora_conta = '2932';
+		$remessa->header->digito_verificador_agencia = '';
+		$remessa->header->numero_conta_corrente = '24992';
+		$remessa->header->digito_verificador_conta = '9';
+		$remessa->header->digito_verificador_agencia_conta = '';
+		$remessa->header->nome_empresa = 'MACWEB SOLUTIONS LTDA';
+		$remessa->header->nome_banco = 'BANCO ITAU SA';
+		$remessa->header->exclusivo_febraban_02 = '';
+		$remessa->header->codigo_remessa_retorno = '1';
+		$remessa->header->data_geracao_arquivo = date('dmY');
+		$remessa->header->hora_geracao_arquivo = date('His');
+		$remessa->header->numero_sequencial_arquivo = '1';
+		$remessa->header->densidade_gravacao_arquivo = '1600';
+		$remessa->header->reservado_banco_01 = '';
+		$remessa->header->reservado_empresa_01 = '';
+		$remessa->header->exclusivo_febraban_03 = '';
+
+		// criar um novo lote de serviço para a remessa
+		// informando o código sequencial do lote
+		$lote = $remessa->novoLote(1);
 
 		// header lote
-		$remessa->header_lote->codigo_banco = 341;
-		$remessa->header_lote->lote_servico = 1;
-		//$remessa->header_lote->tipo_registro = 1;
-		//$remessa->header_lote->tipo_operacao = 'C';
-		$remessa->header_lote->tipo_servico = 30;
-		$remessa->header_lote->forma_lancamento = '02';
-		//$remessa->header_lote->versao_layout_lote = '045';
-		$remessa->header_lote->exclusivo_febraban_01 = '';
-		$remessa->header_lote->tipo_inscricao_empresa = 2;
-		$remessa->header_lote->numero_inscricao_empresa = '05346078000186';
-		$remessa->header_lote->codigo_convenio_banco = '';
-		$remessa->header_lote->agencia_mantenedora_conta = '2932';
-		$remessa->header_lote->digito_verificador_agencia = '';
-		$remessa->header_lote->numero_conta_corrente = '24992';
-		$remessa->header_lote->digito_verificador_conta = '9';
-		$remessa->header_lote->digito_verificador_agencia_conta = '';
-		$remessa->header_lote->nome_empresa = 'MACWEB SOLUTIONS LTDA';
-		$remessa->header_lote->mensagem = '';
-		$remessa->header_lote->logradouro = 'RUA GUAJAJARAS';
-		$remessa->header_lote->numero = '910';
-		$remessa->header_lote->complemento = 'SALA 1203';
-		$remessa->header_lote->cidade = 'BELO HORIZONTE';
-		$remessa->header_lote->cep = '30180';
-		$remessa->header_lote->complemento_cep = '100';
-		$remessa->header_lote->estado = 'MG';
-		$remessa->header_lote->indicativo_forma_pagamento_servico = '01';
-		$remessa->header_lote->exclusivo_febraban_02 = '';
-		$remessa->header_lote->codigos_ocorrencias_retorno = '';
-
-		// trailer lote
-		$remessa->trailer_lote->codigo_banco = 341;
-		$remessa->trailer_lote->lote_servico = 1;
-		// $remessa->trailer_lote->tipo_registro = 5;
-		$remessa->trailer_lote->exclusivo_febraban_01 = '';
-		$remessa->trailer_lote->quantidade_registros_lote = 1;
-		$remessa->trailer_lote->somatoria_valores = '10000';
-		$remessa->trailer_lote->somatoria_quantidade_moedas = '1';
-		$remessa->trailer_lote->numero_aviso_debito = '0';
-		$remessa->trailer_lote->exclusivo_febraban_02 = '';
-		$remessa->trailer_lote->codigos_ocorrencias_retorno = '';
-		
-		// trailer arquivo
-		$remessa->trailer_arquivo->codigo_banco = 341;
-    	$remessa->trailer_arquivo->lote_servico = 9999;
-    	$remessa->trailer_arquivo->tipo_registro = 9;
-    	$remessa->trailer_arquivo->exclusivo_febraban_01 = '';
-    	$remessa->trailer_arquivo->quantidade_lotes_arquivo = 1;
-    	$remessa->trailer_arquivo->quantidade_registros_arquivo = 1;
-    	$remessa->trailer_arquivo->quantidade_contas_conciliacao_lotes = 1;
-    	$remessa->trailer_arquivo->exclusivo_febraban_02 = '';
-
+		$lote->header->codigo_banco = 341;
+		$lote->header->lote_servico = $lote->sequencial;
+		$lote->header->tipo_servico = 30;
+		$lote->header->forma_lancamento = '02';
+		$lote->header->exclusivo_febraban_01 = '';
+		$lote->header->tipo_inscricao_empresa = 2;
+		$lote->header->numero_inscricao_empresa = '05346078000186';
+		$lote->header->codigo_convenio_banco = '';
+		$lote->header->agencia_mantenedora_conta = '2932';
+		$lote->header->digito_verificador_agencia = '';
+		$lote->header->numero_conta_corrente = '24992';
+		$lote->header->digito_verificador_conta = '9';
+		$lote->header->digito_verificador_agencia_conta = '';
+		$lote->header->nome_empresa = 'MACWEB SOLUTIONS LTDA';
+		$lote->header->mensagem = '';
+		$lote->header->logradouro = 'RUA GUAJAJARAS';
+		$lote->header->numero = '910';
+		$lote->header->complemento = 'SALA 1203';
+		$lote->header->cidade = 'BELO HORIZONTE';
+		$lote->header->cep = '30180';
+		$lote->header->complemento_cep = '100';
+		$lote->header->estado = 'MG';
+		$lote->header->indicativo_forma_pagamento_servico = '01';
+		$lote->header->exclusivo_febraban_02 = '';
+		$lote->header->codigos_ocorrencias_retorno = '';
+	
 		// detalhes
-		$detalhe = $remessa->novoDetalhe();
+		$detalhe = $lote->novoDetalhe();
 		// segmento a
 		$detalhe->segmento_a->codigo_banco = 341;
 		$detalhe->segmento_a->lote_servico = 1;
@@ -196,8 +173,33 @@ class ParserFebrabanPagamentoTest extends \PHPUnit_Framework_TestCase
 		$detalhe->segmento_c->digito_verificador_agencia_conta = '';
 		$detalhe->segmento_c->valor_inss = '0';
 		$detalhe->segmento_c->exclusivo_febraban_02 = '';
-		$remessa->inserirDetalhe($detalhe);
-			
+
+		$lote->inserirDetalhe($detalhe);
+
+		// trailer lote
+		$lote->trailer->codigo_banco = 341;
+		$lote->trailer->lote_servico = $lote->sequencial;
+		$lote->trailer->exclusivo_febraban_01 = '';
+		$lote->trailer->quantidade_registros_lote = 1;
+		$lote->trailer->somatoria_valores = '10000';
+		$lote->trailer->somatoria_quantidade_moedas = '1';
+		$lote->trailer->numero_aviso_debito = '0';
+		$lote->trailer->exclusivo_febraban_02 = '';
+		$lote->trailer->codigos_ocorrencias_retorno = '';
+		
+		// apos definir o lote insere na remessa
+		$remessa->inserirLote($lote);
+
+		// trailer arquivo
+		$remessa->trailer->codigo_banco = 341;
+    	$remessa->trailer->lote_servico = 9999;
+    	$remessa->trailer->tipo_registro = 9;
+    	$remessa->trailer->exclusivo_febraban_01 = '';
+    	$remessa->trailer->quantidade_lotes_arquivo = 1;
+    	$remessa->trailer->quantidade_registros_arquivo = 1;
+    	$remessa->trailer->quantidade_contas_conciliacao_lotes = 1;
+    	$remessa->trailer->exclusivo_febraban_02 = '';
+
 		// gera arquivo
 		$remessaFile = new RemessaFile($remessa);
 		$this->assertInstanceOf('CnabParser\Output\RemessaFile', $remessaFile);

@@ -22,14 +22,28 @@
 namespace CnabParser;
 
 use CnabParser\Parser\Layout;
+use CnabParser\Model\HeaderArquivo;
+use CnabParser\Model\Lote;
+use CnabParser\Model\TrailerArquivo;
 
 abstract class IntercambioBancarioAbstract implements \JsonSerializable
 {
-	/**
-	 * the data
-	 * @var array
-	 */
-	protected $data;
+    /**
+     * Header Arquivo
+     * @var CnabParser\Model\HeaderArquivo
+     */
+    public $header;
+    /**
+     * Trailer Arquivo
+     * @var CnabParser\Model\TrailerArquivo
+     */
+    public $trailer;
+
+    /**
+     * Array de lotes
+     * @var Array of CnabParser\Model\Lote
+     */
+    public $lotes;
 
 	/**
 	 * @var CnabParser\Parser\Layout
@@ -39,6 +53,9 @@ abstract class IntercambioBancarioAbstract implements \JsonSerializable
     public function __construct(Layout $layout)
     {
         $this->layout = $layout;
+        $this->header = new HeaderArquivo();
+        $this->trailer = new TrailerArquivo();
+        $this->lotes = array();
     }
 
 	/**
@@ -49,28 +66,46 @@ abstract class IntercambioBancarioAbstract implements \JsonSerializable
 		return $this->layout;
 	}
 
+    public function inserirLote(Lote $lote)
+    {
+        $this->lotes[] = $lote;
+        return $this;
+    }
+
+    public function removerLote($sequencial)
+    {
+        $found = -1;
+
+        foreach ($this->lotes as $indice => $lote) {
+            if ($lote->sequencial == $sequencial) {
+                $found = $indice;
+                break;
+            }
+        }
+
+        if ($found > -1) {
+            unset($this->lotes[$found]);
+        }
+
+        return $this;
+    }
+
+    public function limparLotes()
+    {
+        $this->lotes = array();
+        return $this;
+    }
+
     public function jsonSerialize()
     {
-        return $this->data;
-    }
+        $headerArquivo = $this->header->jsonSerialize();
+        $trailerArquivo = $this->trailer->jsonSerialize();
+        $lotes = $this->lotes;
 
-	public function __set($name, $value)
-    {
-        $this->data[$name] = $value;
-    }
-
-    public function __get($name)
-    {
-        return isset($this->data[$name]) ? $this->data[$name] : null;
-    }
-
-    public function __isset($name)
-    {
-        return isset($this->data[$name]);
-    }
-
-    public function __unset($name)
-    {
-        unset($this->data[$name]);
+        return array_merge(
+            array('header_arquivo' => $headerArquivo),
+            array('lotes' => $lotes),
+            array('trailer_arquivo' => $trailerArquivo)
+        );
     }
 }

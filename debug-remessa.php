@@ -32,56 +32,51 @@ use CnabParser\Output\RemessaFile;
  */
 $remessaLayout = new Layout(__DIR__.'/config/itau/cnab240/cobranca_bloqueto.yml');
 $remessa = new Remessa($remessaLayout);
-// campos da remessa
-$remessa->header_arquivo->codigo_banco = 341;
-$remessa->header_arquivo->tipo_inscricao = 2;
-$remessa->header_arquivo->inscricao_numero = '05346078000186';
-$remessa->header_arquivo->agencia = 2932;
-$remessa->header_arquivo->conta = 24992;
-$remessa->header_arquivo->dac = 9;
-$remessa->header_arquivo->nome_empresa = 'MACWEB SOLUTIONS LTDA';
-$remessa->header_arquivo->data_geracao = date('dmY');
-$remessa->header_arquivo->hora_geracao = date('His');
-$remessa->header_arquivo->numero_sequencial_arquivo_retorno = 1;
 
-$remessa->header_lote->codigo_banco = 341;
-$remessa->header_lote->lote_servico = 1;
-$remessa->header_lote->tipo_registro = 1;
-$remessa->header_lote->tipo_operacao = 'R';
-$remessa->header_lote->tipo_servico = '01';
-$remessa->header_lote->zeros_01 = 0;
-$remessa->header_lote->versao_layout_lote = '030';
-$remessa->header_lote->brancos_01 = '';
-$remessa->header_lote->tipo_inscricao = 2;
-$remessa->header_lote->inscricao_empresa = '05346078000186';
-$remessa->header_lote->brancos_02 = 0;
-$remessa->header_lote->zeros_02 = 0;
-$remessa->header_lote->agencia = 2932;
-$remessa->header_lote->brancos_03 = '';
-$remessa->header_lote->zeros_03 = 0;
-$remessa->header_lote->conta = '24992';
-$remessa->header_lote->brancos_04 = '';
-$remessa->header_lote->dac = 9;
-$remessa->header_lote->nome_empresa = 'MACWEB SOLUTIONS LTDA';
-$remessa->header_lote->brancos_05 = '';
-$remessa->header_lote->numero_sequencial_arquivo_retorno = 1;
-$remessa->header_lote->data_gravacao = date('dmY');
-$remessa->header_lote->data_credito = date('dmY');
-$remessa->header_lote->brancos_06 = '';
+// header arquivo
+$remessa->header->codigo_banco = 341;
+$remessa->header->tipo_inscricao = 2;
+$remessa->header->inscricao_numero = '05346078000186';
+$remessa->header->agencia = 2932;
+$remessa->header->conta = 24992;
+$remessa->header->dac = 9;
+$remessa->header->nome_empresa = 'MACWEB SOLUTIONS LTDA';
+$remessa->header->data_geracao = date('dmY');
+$remessa->header->hora_geracao = date('His');
+$remessa->header->numero_sequencial_arquivo_retorno = 1;
 
-$remessa->trailer_lote->lote_servico = 1;
-$remessa->trailer_lote->quantidade_registros_lote = 1;
-$remessa->trailer_lote->quantidade_cobranca_simples = 1;
-$remessa->trailer_lote->valor_total_cobranca_simples = 10000;
-$remessa->trailer_lote->quantidade_cobranca_vinculada = 0;
-$remessa->trailer_lote->valor_total_cobranca_vinculada = 0;
+// criar um novo lote de serviço para a remessa
+// informando o código sequencial do lote
+$lote = $remessa->novoLote(1);
 
-$remessa->trailer_arquivo->total_lotes = 1;
-$remessa->trailer_arquivo->total_registros = 1;
+$lote->header->codigo_banco = 341;
+$lote->header->lote_servico = $lote->sequencial;
+$lote->header->tipo_registro = 1;
+$lote->header->tipo_operacao = 'R';
+$lote->header->tipo_servico = '01';
+$lote->header->zeros_01 = 0;
+$lote->header->versao_layout_lote = '030';
+$lote->header->brancos_01 = '';
+$lote->header->tipo_inscricao = 2;
+$lote->header->inscricao_empresa = '05346078000186';
+$lote->header->brancos_02 = '0';
+$lote->header->zeros_02 = 0;
+$lote->header->agencia = 2932;
+$lote->header->brancos_03 = '';
+$lote->header->zeros_03 = 0;
+$lote->header->conta = '24992';
+$lote->header->brancos_04 = '';
+$lote->header->dac = 9;
+$lote->header->nome_empresa = 'MACWEB SOLUTIONS LTDA';
+$lote->header->brancos_05 = '';
+$lote->header->numero_sequencial_arquivo_retorno = 1;
+$lote->header->data_gravacao = date('dmY');
+$lote->header->data_credito = date('dmY');
+$lote->header->brancos_06 = '';
 
-$detalhe = $remessa->novoDetalhe();
+$detalhe = $lote->novoDetalhe();
 // segmento p
-$detalhe->segmento_p->lote_servico = 1;
+$detalhe->segmento_p->lote_servico = $lote->sequencial;
 $detalhe->segmento_p->nummero_sequencial_registro_lote = 1;
 $detalhe->segmento_p->codigo_ocorrencia = '01';
 $detalhe->segmento_p->agencia = 2932;
@@ -93,7 +88,7 @@ $detalhe->segmento_p->dac_nosso_numero = 3;
 $detalhe->segmento_p->numero_documento = 1;
 $detalhe->segmento_p->vencimento = '10052016';
 $detalhe->segmento_p->valor_titulo = 1000;
-$detalhe->segmento_p->agencia_cobradora = 2932;
+$detalhe->segmento_p->agencia_cobradora = 0;
 $detalhe->segmento_p->dac_agencia_cobradora = 0;
 $detalhe->segmento_p->especie = '05';
 $detalhe->segmento_p->aceite = 'N';
@@ -110,8 +105,8 @@ $detalhe->segmento_p->prazo_negativacao_protesto = 0;
 $detalhe->segmento_p->codigo_baixa = 0;
 $detalhe->segmento_p->prazo_baixa = 0;
 // segmento q
-$detalhe->segmento_q->lote_servico = 1;
-$detalhe->segmento_q->nummero_sequencial_registro_lote = 1;
+$detalhe->segmento_q->lote_servico = $lote->sequencial;
+$detalhe->segmento_q->nummero_sequencial_registro_lote = 2;
 $detalhe->segmento_q->codigo_ocorrencia = '01';
 $detalhe->segmento_q->tipo_inscricao = 2;
 $detalhe->segmento_q->inscricao_numero = '05346078000186';
@@ -125,184 +120,28 @@ $detalhe->segmento_q->uf = 'MG';
 $detalhe->segmento_q->tipo_inscricao_sacador = 2;
 $detalhe->segmento_q->inscricao_sacador = '05346078000186';
 $detalhe->segmento_q->nome_sacador = 'MACWEB SOLUTIONS LTDA';
-// segmento r opcional nao adicionado no layout
-// segmento y opcional nao adicionado no layout
+// segmento r opcional nao adicionado
+unset($detalhe->segmento_r);
+// segmento y opcional nao adicionado
+unset($detalhe->segmento_y);
+// insere o detalhe no lote da remessa
+$lote->inserirDetalhe($detalhe);
 
-// insere o detalhe na remessa
-$remessa->inserirDetalhe($detalhe);
+// trailer lote
+$lote->trailer->lote_servico = $lote->sequencial;
+$lote->trailer->quantidade_registros_lote = 4; // quantidade de Registros do Lote correspondente à soma da quantidade dos registros tipo 1 (header_lote), 3(detalhes) e 5(trailer_lote)
+$lote->trailer->quantidade_cobranca_simples = 1;
+$lote->trailer->valor_total_cobranca_simples = 10000;
+$lote->trailer->quantidade_cobranca_vinculada = 0;
+$lote->trailer->valor_total_cobranca_vinculada = 0;
+$lote->trailer->aviso_bancario = '00000000';
+// inserir lote na remessa
+$remessa->inserirLote($lote);
+
+// trailer arquivo
+$remessa->trailer->total_lotes = 1; // quantidade de Lotes do arquivo correspondente à soma da quantidade dos registros tipo 1 (header_lote).
+$remessa->trailer->total_registros = 6; //total da quantidade de Registros no arquivo correspondente à soma da quantidade dos registros tipo 0(header_arquivo), 1(header_lote), 3(detalhes), 5(trailer_lote) e 9(trailer_arquivo).
+
 // gera arquivo
 $remessaFile = new RemessaFile($remessa);
 $remessaFile->generate(__DIR__.'/tests/out/itaucobranca240.rem');
-
-/*
- * Layout PAGAMENTOS FEBRABAN
- */
-/*
-$remessaLayout = new Layout(__DIR__.'/../config/febraban/cnab240/pagamentos.yml');
-$remessa = new Remessa($remessaLayout);
-
-// preenche campos
-$remessa->header_arquivo->codigo_banco = 341;
-//$remessa->header_arquivo->lote_servico = 0;
-//$remessa->header_arquivo->tipo_registro = 0;
-$remessa->header_arquivo->exclusivo_febraban_01 = '';
-$remessa->header_arquivo->tipo_inscricao_empresa = 2;
-$remessa->header_arquivo->numero_inscricao_empresa = '05346078000186';
-$remessa->header_arquivo->codigo_convenio_banco = '0';
-$remessa->header_arquivo->agencia_mantenedora_conta = '2932';
-$remessa->header_arquivo->digito_verificador_agencia = '';
-$remessa->header_arquivo->numero_conta_corrente = '24992';
-$remessa->header_arquivo->digito_verificador_conta = '9';
-$remessa->header_arquivo->digito_verificador_agencia_conta = '';
-$remessa->header_arquivo->nome_empresa = 'MacWeb Solutions Ltda';
-$remessa->header_arquivo->nome_banco = 'Banco Itaú';
-$remessa->header_arquivo->exclusivo_febraban_02 = '';
-$remessa->header_arquivo->codigo_remessa_retorno = '1';
-$remessa->header_arquivo->data_geracao_arquivo = date('dmY');
-$remessa->header_arquivo->hora_geracao_arquivo = date('His');
-$remessa->header_arquivo->numero_sequencial_arquivo = '1';
-//$remessa->header_arquivo->versao_layout_arquivo = '091';
-$remessa->header_arquivo->densidade_gravacao_arquivo = '1600';
-$remessa->header_arquivo->reservado_banco_01 = '';
-$remessa->header_arquivo->reservado_empresa_01 = '';
-$remessa->header_arquivo->exclusivo_febraban_03 = '';
-
-// header lote
-$remessa->header_lote->codigo_banco = 341;
-$remessa->header_lote->lote_servico = 1;
-//$remessa->header_lote->tipo_registro = 1;
-//$remessa->header_lote->tipo_operacao = 'C';
-$remessa->header_lote->tipo_servico = 30;
-$remessa->header_lote->forma_lancamento = '02';
-//$remessa->header_lote->versao_layout_lote = '045';
-$remessa->header_lote->exclusivo_febraban_01 = '';
-$remessa->header_lote->tipo_inscricao_empresa = 2;
-$remessa->header_lote->numero_inscricao_empresa = '05346078000186';
-$remessa->header_lote->codigo_convenio_banco = '';
-$remessa->header_lote->agencia_mantenedora_conta = '2932';
-$remessa->header_lote->digito_verificador_agencia = '';
-$remessa->header_lote->numero_conta_corrente = '24992';
-$remessa->header_lote->digito_verificador_conta = '9';
-$remessa->header_lote->digito_verificador_agencia_conta = '';
-$remessa->header_lote->nome_empresa = 'MacWeb Solutions Ltda';
-$remessa->header_lote->mensagem = '';
-$remessa->header_lote->logradouro = 'Rua Guajajaras';
-$remessa->header_lote->numero = '910';
-$remessa->header_lote->complemento = 'sala 1203';
-$remessa->header_lote->cidade = 'Belo Horizonte';
-$remessa->header_lote->cep = '30180';
-$remessa->header_lote->complemento_cep = '100';
-$remessa->header_lote->estado = 'MG';
-$remessa->header_lote->indicativo_forma_pagamento_servico = '01';
-$remessa->header_lote->exclusivo_febraban_02 = '';
-$remessa->header_lote->codigos_ocorrencias_retorno = '';
-
-// trailer lote
-$remessa->trailer_lote->codigo_banco = 341;
-$remessa->trailer_lote->lote_servico = 1;
-// $remessa->trailer_lote->tipo_registro = 5;
-$remessa->trailer_lote->exclusivo_febraban_01 = '';
-$remessa->trailer_lote->quantidade_registros_lote = 1;
-$remessa->trailer_lote->somatoria_valores = '10000';
-$remessa->trailer_lote->somatoria_quantidade_moedas = '1';
-$remessa->trailer_lote->numero_aviso_debito = '0';
-$remessa->trailer_lote->exclusivo_febraban_02 = '';
-$remessa->trailer_lote->codigos_ocorrencias_retorno = '';
-
-// trailer arquivo
-$remessa->trailer_arquivo->codigo_banco = 341;
-$remessa->trailer_arquivo->lote_servico = 9999;
-$remessa->trailer_arquivo->tipo_registro = 9;
-$remessa->trailer_arquivo->exclusivo_febraban_01 = '';
-$remessa->trailer_arquivo->quantidade_lotes_arquivo = 1;
-$remessa->trailer_arquivo->quantidade_registros_arquivo = 1;
-$remessa->trailer_arquivo->quantidade_contas_conciliacao_lotes = 1;
-$remessa->trailer_arquivo->exclusivo_febraban_02 = '';
-
-// detalhes
-$detalhe = $remessa->novoDetalhe();
-// segmento a
-$detalhe->segmento_a->codigo_banco = 341;
-$detalhe->segmento_a->lote_servico = 1;
-$detalhe->segmento_a->tipo_registro = 3;
-$detalhe->segmento_a->numero_sequencial_registro_lote = 1;
-$detalhe->segmento_a->codigo_segmento_registro_detalhe = 'A';
-$detalhe->segmento_a->tipo_movimento = 0;
-$detalhe->segmento_a->codigo_instrucao_movimento = '00';
-$detalhe->segmento_a->codigo_camara_centralizadora = '700';
-$detalhe->segmento_a->codigo_banco_favorecido = 341;
-$detalhe->segmento_a->agencia_mantenedora_conta_favorecido = 3158;
-$detalhe->segmento_a->digito_verificador_agencia = '';
-$detalhe->segmento_a->numero_conta_corrente = 38094;
-$detalhe->segmento_a->digito_verificador_conta = 3;
-$detalhe->segmento_a->digito_verificador_agencia_conta = '';
-$detalhe->segmento_a->nome_favorecido = 'Glauber Portella';
-$detalhe->segmento_a->numero_documento_atribuido_empresa = '12345';
-$detalhe->segmento_a->data_pagamento = date('dmY');
-$detalhe->segmento_a->tipo_moeda = 'BRL';
-$detalhe->segmento_a->quantidade_moeda = 1;
-$detalhe->segmento_a->valor_pagamento = '15000';
-$detalhe->segmento_a->numero_documento_atribuido_banco = '123456';
-$detalhe->segmento_a->data_real_efetivacao_pagamento = date('dmY');
-$detalhe->segmento_a->valor_real_efetivacao_pagamento = '15000';
-$detalhe->segmento_a->outras_informacoes = '';
-$detalhe->segmento_a->complemento_tipo_servico = '06';
-$detalhe->segmento_a->codigo_finalidade_ted = '123456';
-$detalhe->segmento_a->complemento_finalidade_pagamento = '0';
-$detalhe->segmento_a->exclusivo_febraban_01 = '0';
-$detalhe->segmento_a->aviso_favorecido = '0';
-$detalhe->segmento_a->codigos_ocorrencias_retorno = '00';
-
-// segmento b
-$detalhe->segmento_b->codigo_banco = 341;
-$detalhe->segmento_b->lote_servico = 1;
-$detalhe->segmento_b->tipo_registro = 3;
-$detalhe->segmento_b->numero_sequencial_registro_lote = 1;
-$detalhe->segmento_b->codigo_segmento_registro_detalhe = 'B';
-$detalhe->segmento_b->exclusivo_febraban_01 = '';
-$detalhe->segmento_b->tipo_inscricao_favorecido = 1;
-$detalhe->segmento_b->numero_inscricao_favorecido = '05771095613';
-$detalhe->segmento_b->logradouro = 'Rua Alvarenga';
-$detalhe->segmento_b->numero = 40;
-$detalhe->segmento_b->complemento = '';
-$detalhe->segmento_b->bairro = 'Guarani';
-$detalhe->segmento_b->cidade = 'Belo Horizonte';
-$detalhe->segmento_b->cep = '31814';
-$detalhe->segmento_b->complemento_cep = '500';
-$detalhe->segmento_b->estado = 'MG';
-$detalhe->segmento_b->data_vencimento_nominal = date('dmY');
-$detalhe->segmento_b->valor_documento_nominal = '1500';
-$detalhe->segmento_b->valor_abatimento = '0';
-$detalhe->segmento_b->valor_desconto = '0';
-$detalhe->segmento_b->valor_mora = '0';
-$detalhe->segmento_b->valor_multa = '0';
-$detalhe->segmento_b->codigo_documento_favorecido = '05771095613';
-$detalhe->segmento_b->aviso_favorecido = '';
-$detalhe->segmento_b->exclusivo_siape_01 = '';
-$detalhe->segmento_b->codigo_ispb = '';
-
-// segmento c
-$detalhe->segmento_c->codigo_banco = 341;
-$detalhe->segmento_c->lote_servico = 1;
-$detalhe->segmento_c->tipo_registro = 3;
-$detalhe->segmento_c->numero_sequencial_registro_lote = 1;
-$detalhe->segmento_c->codigo_segmento_registro_detalhe = 'C';
-$detalhe->segmento_c->exclusivo_febraban_01 = '';
-$detalhe->segmento_c->valor_ir = '0';
-$detalhe->segmento_c->valor_iss = '0';
-$detalhe->segmento_c->valor_iof = '0';
-$detalhe->segmento_c->valor_outras_deducoes = '0';
-$detalhe->segmento_c->valor_outros_acrescimos = '0';
-$detalhe->segmento_c->agencia_favorecido = 3158;
-$detalhe->segmento_c->digito_verificador_agencia = '';
-$detalhe->segmento_c->numero_conta_corrente = 38094;
-$detalhe->segmento_c->digito_verificador_conta = 3;
-$detalhe->segmento_c->digito_verificador_agencia_conta = '';
-$detalhe->segmento_c->valor_inss = '0';
-$detalhe->segmento_c->exclusivo_febraban_02 = '';
-$remessa->inserirDetalhe($detalhe);
-	
-// gera arquivo
-$remessaFile = new RemessaFile($remessa);
-$remessaFile->generate(__DIR__.'/tests/out/remessa-pagamento.rem');
-*/

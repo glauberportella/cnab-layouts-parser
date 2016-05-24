@@ -21,7 +21,84 @@
 
 namespace CnabParser\Model;
 
-class Lote extends BaseSerializable
+class Lote implements \JsonSerializable
 {
-	
+	public $sequencial;
+	public $header;
+	public $trailer;
+	public $detalhes;
+
+	protected $layout;
+
+	public function __construct(array $layout, $sequencial = 1)
+	{
+		$this->layout = $layout;
+
+		$this->sequencial = $sequencial;
+		$this->header = new HeaderLote();
+		$this->trailer = new TrailerLote();
+		$this->detalhes = array();
+
+		if (isset($this->layout['header_lote'])) {
+			foreach ($this->layout['header_lote'] as $field => $definition) {
+				$this->header->$field = (isset($definition['default'])) ? $definition['default'] : '';
+			}
+		}
+
+		if (isset($this->layout['trailer_lote'])) {
+			foreach ($this->layout['trailer_lote'] as $field => $definition) {
+				$this->trailer->$field = (isset($definition['default'])) ? $definition['default'] : '';
+			}
+		}
+	}
+
+	public function getLayout()
+	{
+		return $this->layout;
+	}
+
+	public function novoDetalhe()
+	{
+		$detalhe = new \stdClass;
+		if (isset($this->layout['detalhes'])) {
+			foreach ($this->layout['detalhes'] as $segmento => $segmentoDefinitions) {
+				$detalhe->$segmento = new \stdClass;
+				foreach ($segmentoDefinitions as $field => $definition) {
+					$detalhe->$segmento->$field = (isset($definition['default'])) ? $definition['default'] : '';
+				}
+			}
+		}
+		return $detalhe;
+	}
+
+	public function inserirDetalhe(\stdClass $detalhe)
+	{
+		$this->detalhes[] = $detalhe;
+		return $this;
+	}
+
+	public function countDetalhes()
+	{
+		return count($this->detalhes);
+	}
+
+	public function limpaDetalhes()
+	{
+		$this->detalhes = array();
+		return $this;
+	}
+
+	public function jsonSerialize()
+    {
+    	$headerLote = $this->header->jsonSerialize();
+    	$trailerLote = $this->trailer->jsonSerialize();
+    	$detalhes = $this->detalhes;
+
+    	return array_merge(
+    		array('codigo_lote' => $this->sequencial),
+    		array('header_lote' => $headerLote),
+    		array('segmentos' => $detalhes),
+    		array('trailer_lote' => $trailerLote)
+		);
+    }
 }

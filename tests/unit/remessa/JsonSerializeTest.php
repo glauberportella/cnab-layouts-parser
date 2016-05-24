@@ -1,4 +1,5 @@
 <?php
+
 // Copyright (c) 2016 Glauber Portella <glauberportella@gmail.com>
 
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -21,17 +22,11 @@
 
 use CnabParser\Parser\Layout;
 use CnabParser\Model\Remessa;
-use CnabParser\Output\RemessaFile;
+use CnabParser\Model\Lote;
 
-class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
+class JsonSerializeTest extends \PHPUnit_Framework_TestCase
 {
-	public function testDeveInstanciarLayout()
-	{
-		$layout = new Layout(__DIR__.'/../../../config/itau/cnab240/cobranca_bloqueto.yml');
-		$this->assertInstanceOf('CnabParser\Parser\Layout', $layout);
-	}
-
-	public function testRemessaOk()
+	public function testJsonSerializeRemessaOk()
 	{
 		$remessaLayout = new Layout(__DIR__.'/../../../config/itau/cnab240/cobranca_bloqueto.yml');
 		$remessa = new Remessa($remessaLayout);
@@ -49,10 +44,7 @@ class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 		$remessa->header->hora_geracao = date('His');
 		$remessa->header->numero_sequencial_arquivo_retorno = 1;
 
-		// criar um novo lote de serviço para a remessa
-		// informando o código sequencial do lote
 		$lote = $remessa->novoLote(1);
-		
 		$lote->header->codigo_banco = 341;
 		$lote->header->lote_servico = $lote->sequencial;
 		$lote->header->tipo_registro = 1;
@@ -133,7 +125,7 @@ class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 
 		// trailer lote
 		$lote->trailer->lote_servico = $lote->sequencial;
-		$lote->trailer->quantidade_registros_lote = 4; // quantidade de Registros do Lote correspondente à soma da quantidade dos registros tipo 1 (header_lote), 3(detalhes) e 5(trailer_lote)
+		$lote->trailer->quantidade_registros_lote = 4;
 		$lote->trailer->quantidade_cobranca_simples = 1;
 		$lote->trailer->valor_total_cobranca_simples = 10000;
 		$lote->trailer->quantidade_cobranca_vinculada = 0;
@@ -144,12 +136,19 @@ class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 		$remessa->inserirLote($lote);
 
 		// trailer arquivo
-		$remessa->trailer->total_lotes = 1; // quantidade de Lotes do arquivo correspondente à soma da quantidade dos registros tipo 1 (header_lote).
-		$remessa->trailer->total_registros = 6; //total da quantidade de Registros no arquivo correspondente à soma da quantidade dos registros tipo 0(header_arquivo), 1(header_lote), 3(detalhes), 5(trailer_lote) e 9(trailer_arquivo).
+		$remessa->trailer->total_lotes = 1;
+		$remessa->trailer->total_registros = 6;
 
-		// gera arquivo
-		$remessaFile = new RemessaFile($remessa);
-		$this->assertInstanceOf('CnabParser\Output\RemessaFile', $remessaFile);
-		$remessaFile->generate(__DIR__.'/../../out/itau-cobranca240.rem');
+		$headerJson = json_encode($remessa->header);
+		$this->assertJson($headerJson);
+
+		$trailerJson = json_encode($remessa->trailer);
+		$this->assertJson($trailerJson);
+
+		$lotesJson = json_encode($remessa->lotes);
+		$this->assertJson($lotesJson);
+
+		$remessaJson = json_encode($remessa);
+		$this->assertJson($remessaJson);
 	}
 }
