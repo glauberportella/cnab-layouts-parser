@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "symfony/yaml": "^2.8"
-    },
+		"symfony/yaml": "2.7"
+	},
     "autoload": {
         "psr-4": { "": "src/" }
     },
