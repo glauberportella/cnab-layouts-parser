@@ -44,7 +44,7 @@
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Model\Remessa</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Output\RemessaFile</span>;</span>
 <span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-smi">$remessaLayout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca_bloqueto.yml<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$remessaLayout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca.yml<span class="pl-pds">'</span></span>);</span>
 <span class="pl-s1"><span class="pl-smi">$remessa</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Remessa</span>(<span class="pl-smi">$remessaLayout</span>);</span>
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-c">// header arquivo</span></span>
@@ -172,7 +172,7 @@
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Model\Retorno</span>;</span>
 <span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Input\RetornoFile</span>;</span>
 <span class="pl-s1"></span>
-<span class="pl-s1"><span class="pl-smi">$layout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca_bloqueto.yml<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$layout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca.yml<span class="pl-pds">'</span></span>);</span>
 <span class="pl-s1"><span class="pl-smi">$retornoFile</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">RetornoFile</span>(<span class="pl-smi">$layout</span>, <span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/data/cobranca-itau-cnab240.ret<span class="pl-pds">'</span></span>);</span>
 <span class="pl-s1"></span>
 <span class="pl-s1"><span class="pl-c">// Gera o objeto instancia de CnabParser\Model\Retorno com os dados do arquivo de retorno processado</span></span>
