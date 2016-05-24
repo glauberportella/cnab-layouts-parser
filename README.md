@@ -20,7 +20,7 @@ use CnabParser\Parser\Layout;
 use CnabParser\Model\Remessa;
 use CnabParser\Output\RemessaFile;
 
-$remessaLayout = new Layout(__DIR__.'/config/itau/cnab240/cobranca_bloqueto.yml');
+$remessaLayout = new Layout(__DIR__.'/config/itau/cnab240/cobranca.yml');
 $remessa = new Remessa($remessaLayout);
 
 // header arquivo
@@ -149,7 +149,7 @@ use CnabParser\Parser\Layout;
 use CnabParser\Model\Retorno;
 use CnabParser\Input\RetornoFile;
 
-$layout = new Layout(__DIR__.'/config/itau/cnab240/cobranca_bloqueto.yml');
+$layout = new Layout(__DIR__.'/config/itau/cnab240/cobranca.yml');
 $retornoFile = new RetornoFile($layout, __DIR__.'/data/cobranca-itau-cnab240.ret');
 
 // Gera o objeto instancia de CnabParser\Model\Retorno com os dados do arquivo de retorno processado
