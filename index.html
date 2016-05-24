@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>CNAB Layouts Parser by glauberportella</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">CNAB Layouts Parser</h1>
+      <h2 class="project-tagline">Parser de arquivos de configuração CNAB (layouts) gerados no projeto http://glauberportella.github.io/cnab-layouts/</h2>
+      <a href="https://github.com/glauberportella/cnab-layouts-parser" class="btn">View on GitHub</a>
+      <a href="https://github.com/glauberportella/cnab-layouts-parser/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/glauberportella/cnab-layouts-parser/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><a href="https://travis-ci.org/glauberportella/cnab-layouts-parser"><img src="https://travis-ci.org/glauberportella/cnab-layouts-parser.svg?branch=master" alt="Build Status"></a> <a href="https://codeclimate.com/github/glauberportella/cnab-layouts-parser"><img src="https://codeclimate.com/github/glauberportella/cnab-layouts-parser/badges/gpa.svg" alt="Code Climate"></a></p>
+
+<h1>
+<a id="cnab-layouts-parser" class="anchor" href="#cnab-layouts-parser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CNAB LAYOUTS PARSER</h1>
+
+<h1>
+<a id="usando-o-parser" class="anchor" href="#usando-o-parser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usando o Parser</h1>
+
+<p><strong>Obs.:</strong> Execute <code>composer install</code> para instalar as dependências.</p>
+
+<h1>
+<a id="exemplos" class="anchor" href="#exemplos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exemplos</h1>
+
+<h2>
+<a id="arquivo-de-remessa" class="anchor" href="#arquivo-de-remessa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arquivo de Remessa</h2>
+
+<p>Gerando um arquivo Remessa CNAB240:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">&lt;</span>?<span class="pl-c1">php</span> </span>
+<span class="pl-s1"><span class="pl-k">require_once</span> <span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/vendor/autoload.php<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Parser\Layout</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Model\Remessa</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Output\RemessaFile</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$remessaLayout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca_bloqueto.yml<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Remessa</span>(<span class="pl-smi">$remessaLayout</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// header arquivo</span></span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_banco</span> <span class="pl-k">=</span> <span class="pl-c1">341</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_inscricao</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">inscricao_numero</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>05346078000186<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">agencia</span> <span class="pl-k">=</span> <span class="pl-c1">2932</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">conta</span> <span class="pl-k">=</span> <span class="pl-c1">24992</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">dac</span> <span class="pl-k">=</span> <span class="pl-c1">9</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">nome_empresa</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MACWEB SOLUTIONS LTDA<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_geracao</span> <span class="pl-k">=</span> <span class="pl-c1">date</span>(<span class="pl-s"><span class="pl-pds">'</span>dmY<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">hora_geracao</span> <span class="pl-k">=</span> <span class="pl-c1">date</span>(<span class="pl-s"><span class="pl-pds">'</span>His<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">numero_sequencial_arquivo_retorno</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// criar um novo lote de serviço para a remessa</span></span>
+<span class="pl-s1"><span class="pl-c">// informando o código sequencial do lote</span></span>
+<span class="pl-s1"><span class="pl-smi">$lote</span> <span class="pl-k">=</span> <span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span>novoLote(<span class="pl-c1">1</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_banco</span> <span class="pl-k">=</span> <span class="pl-c1">341</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">lote_servico</span> <span class="pl-k">=</span> <span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">sequencial</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_registro</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_operacao</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>R<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_servico</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>01<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">zeros_01</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">versao_layout_lote</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>030<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_01</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_inscricao</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">inscricao_empresa</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>05346078000186<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_02</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>0<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">zeros_02</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">agencia</span> <span class="pl-k">=</span> <span class="pl-c1">2932</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_03</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">zeros_03</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">conta</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>24992<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_04</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">dac</span> <span class="pl-k">=</span> <span class="pl-c1">9</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">nome_empresa</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MACWEB SOLUTIONS LTDA<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_05</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">numero_sequencial_arquivo_retorno</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_gravacao</span> <span class="pl-k">=</span> <span class="pl-c1">date</span>(<span class="pl-s"><span class="pl-pds">'</span>dmY<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_credito</span> <span class="pl-k">=</span> <span class="pl-c1">date</span>(<span class="pl-s"><span class="pl-pds">'</span>dmY<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">header</span><span class="pl-k">-&gt;</span><span class="pl-smi">brancos_06</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span> <span class="pl-k">=</span> <span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span>novoDetalhe();</span>
+<span class="pl-s1"><span class="pl-c">// segmento p</span></span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">lote_servico</span> <span class="pl-k">=</span> <span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">sequencial</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">nummero_sequencial_registro_lote</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_ocorrencia</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>01<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">agencia</span> <span class="pl-k">=</span> <span class="pl-c1">2932</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">conta</span> <span class="pl-k">=</span> <span class="pl-c1">24992</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">dac</span> <span class="pl-k">=</span> <span class="pl-c1">9</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">carteira</span> <span class="pl-k">=</span> <span class="pl-c1">109</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">nosso_numero</span> <span class="pl-k">=</span> <span class="pl-c1">12345678</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">dac_nosso_numero</span> <span class="pl-k">=</span> <span class="pl-c1">3</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">numero_documento</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">vencimento</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>10052016<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_titulo</span> <span class="pl-k">=</span> <span class="pl-c1">1000</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">agencia_cobradora</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">dac_agencia_cobradora</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">especie</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>05<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">aceite</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>N<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_emissao</span> <span class="pl-k">=</span> <span class="pl-c1">date</span>(<span class="pl-s"><span class="pl-pds">'</span>dmY<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_juros_mora</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>11052016<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">juros_1_dia</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">data_1o_desconto</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>00000000<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_1o_desconto</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_iof</span> <span class="pl-k">=</span> <span class="pl-c1">38</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_abatimento</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">identificacao_titulo_empresa</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_negativacao_protesto</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">prazo_negativacao_protesto</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_baixa</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_p</span><span class="pl-k">-&gt;</span><span class="pl-smi">prazo_baixa</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-c">// segmento q</span></span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">lote_servico</span> <span class="pl-k">=</span> <span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">sequencial</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">nummero_sequencial_registro_lote</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">codigo_ocorrencia</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>01<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_inscricao</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">inscricao_numero</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>05346078000186<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">nome_pagador</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>GLAUBER PORTELLA<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">logradouro</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>RUA ALVARENGA<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">bairro</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>GUARANI<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">cep</span> <span class="pl-k">=</span> <span class="pl-c1">31814</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">sufixo_cep</span> <span class="pl-k">=</span> <span class="pl-c1">500</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">cidade</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>BELO HORIZONTE<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">uf</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MG<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">tipo_inscricao_sacador</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">inscricao_sacador</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>05346078000186<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_q</span><span class="pl-k">-&gt;</span><span class="pl-smi">nome_sacador</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>MACWEB SOLUTIONS LTDA<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-c">// segmento r opcional nao adicionado</span></span>
+<span class="pl-s1"><span class="pl-c1">unset</span>(<span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_r</span>);</span>
+<span class="pl-s1"><span class="pl-c">// segmento y opcional nao adicionado</span></span>
+<span class="pl-s1"><span class="pl-c1">unset</span>(<span class="pl-smi">$detalhe</span><span class="pl-k">-&gt;</span><span class="pl-smi">segmento_y</span>);</span>
+<span class="pl-s1"><span class="pl-c">// insere o detalhe no lote da remessa</span></span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span>inserirDetalhe(<span class="pl-smi">$detalhe</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// trailer lote</span></span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">lote_servico</span> <span class="pl-k">=</span> <span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">sequencial</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">quantidade_registros_lote</span> <span class="pl-k">=</span> <span class="pl-c1">4</span>; <span class="pl-c">// quantidade de Registros do Lote correspondente à soma da quantidade dos registros tipo 1 (header_lote), 3(detalhes) e 5(trailer_lote)</span></span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">quantidade_cobranca_simples</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_total_cobranca_simples</span> <span class="pl-k">=</span> <span class="pl-c1">10000</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">quantidade_cobranca_vinculada</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">valor_total_cobranca_vinculada</span> <span class="pl-k">=</span> <span class="pl-c1">0</span>;</span>
+<span class="pl-s1"><span class="pl-smi">$lote</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">aviso_bancario</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>00000000<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-c">// inserir lote na remessa</span></span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span>inserirLote(<span class="pl-smi">$lote</span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// trailer arquivo</span></span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">total_lotes</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>; <span class="pl-c">// quantidade de Lotes do arquivo correspondente à soma da quantidade dos registros tipo 1 (header_lote).</span></span>
+<span class="pl-s1"><span class="pl-smi">$remessa</span><span class="pl-k">-&gt;</span><span class="pl-smi">trailer</span><span class="pl-k">-&gt;</span><span class="pl-smi">total_registros</span> <span class="pl-k">=</span> <span class="pl-c1">6</span>; <span class="pl-c">//total da quantidade de Registros no arquivo correspondente à soma da quantidade dos registros tipo 0(header_arquivo), 1(header_lote), 3(detalhes), 5(trailer_lote) e 9(trailer_arquivo).</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// gera arquivo</span></span>
+<span class="pl-s1"><span class="pl-smi">$remessaFile</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">RemessaFile</span>(<span class="pl-smi">$remessa</span>);</span>
+<span class="pl-s1"><span class="pl-smi">$remessaFile</span><span class="pl-k">-&gt;</span>generate(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/tests/out/itaucobranca240.rem<span class="pl-pds">'</span></span>);</span></pre></div>
+
+<h2>
+<a id="retorno" class="anchor" href="#retorno" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Retorno</h2>
+
+<p>Processando um arquivo de retorno transformando-o em modelo para uso em seu sistema.</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-pse">&lt;?php</span><span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">require_once</span> <span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/vendor/autoload.php<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Parser\Layout</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Model\Retorno</span>;</span>
+<span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">CnabParser\Input\RetornoFile</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">$layout</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">Layout</span>(<span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/config/itau/cnab240/cobranca_bloqueto.yml<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"><span class="pl-smi">$retornoFile</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">RetornoFile</span>(<span class="pl-smi">$layout</span>, <span class="pl-c1">__DIR__</span><span class="pl-k">.</span><span class="pl-s"><span class="pl-pds">'</span>/data/cobranca-itau-cnab240.ret<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// Gera o objeto instancia de CnabParser\Model\Retorno com os dados do arquivo de retorno processado</span></span>
+<span class="pl-s1"><span class="pl-smi">$retorno</span> <span class="pl-k">=</span> <span class="pl-smi">$retornoFile</span><span class="pl-k">-&gt;</span>generate();</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c">// ... utilize o $retorno em seu sistema para verificações, etc. ...</span></span></pre></div>
+
+<h1>
+<a id="licença" class="anchor" href="#licen%C3%A7a" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Licença</h1>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2016 Glauber Portella <a href="mailto:glauberportella@gmail.com">glauberportella@gmail.com</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/glauberportella/cnab-layouts-parser">CNAB Layouts Parser</a> is maintained by <a href="https://github.com/glauberportella">glauberportella</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
