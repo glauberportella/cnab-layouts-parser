@@ -28,7 +28,7 @@ class JsonSerializeTest extends \PHPUnit_Framework_TestCase
 {
 	public function testJsonSerializeRemessaOk()
 	{
-		$remessaLayout = new Layout(__DIR__.'/../../../config/itau/cnab240/cobranca_bloqueto.yml');
+		$remessaLayout = new Layout(__DIR__.'/../../../config/itau/cnab240/cobranca.yml');
 		$remessa = new Remessa($remessaLayout);
 		$this->assertInstanceOf('CnabParser\Model\Remessa', $remessa);
 		
