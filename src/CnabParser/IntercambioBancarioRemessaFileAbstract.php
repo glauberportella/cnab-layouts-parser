@@ -38,7 +38,7 @@ abstract class IntercambioBancarioRemessaFileAbstract extends IntercambioBancari
 		foreach ($fieldsDef as $field => $definition) {
 			if (isset($modelSection->$field)) {
 				$format = $definition['picture'];
-				$encoded .= Picture::encode($modelSection->$field, $format, array());
+				$encoded .= Picture::encode($modelSection->$field, $format, array('field_desc' => $field));
 			}
 		}
 		return $encoded;

@@ -81,7 +81,12 @@ class Picture
                 }
 
                 if (!is_numeric($value)) {
-                    throw new \Exception("value '$value' isn't a number, need format $format");
+                    $msg = "%svalor '$value' não é número, formato requerido $format.";
+
+                    if (!empty(@$options['field_desc'])) {
+                        $msg = sprintf($msg, "{$options['field_desc']}: ");
+                    }
+                    throw new \Exception($msg);
                 }
 
                 $value = self::parseNumber($value);
@@ -106,7 +111,12 @@ class Picture
 
                     return \str_pad($value, (int) $m['tamanho1'], '0', STR_PAD_LEFT);
                 } else {
-                    throw new \InvalidArgumentException("'$format' is not a valid format");
+                    $msg = "%s$format' is not a valid format";
+
+                    if (!empty(@$options['field_desc'])) {
+                        $msg = sprintf($msg, "{$options['field_desc']}: ");
+                    }
+                    throw new \InvalidArgumentException($msg);
                 }
             }
         } else {
@@ -134,11 +144,21 @@ class Picture
                 } elseif (!$m['tipo2']) {
                     return self::parseNumber($value);
                 } else {
-                    throw new \InvalidArgumentException("'$format' is not a valid format");
+                    $msg = "%s$format' is not a valid format";
+
+                    if (!empty(@$options['field_desc'])) {
+                        $msg = sprintf($msg, "{$options['field_desc']}: ");
+                    }
+                    throw new \InvalidArgumentException($msg);
                 }
             }
         } else {
-            throw new \InvalidArgumentException("'$format' is not a valid format");
+            $msg = "%s$format' is not a valid format";
+
+            if (!empty(@$options['field_desc'])) {
+                $msg = sprintf($msg, "{$options['field_desc']}: ");
+            }
+            throw new \InvalidArgumentException($msg);
         }
     }
 }

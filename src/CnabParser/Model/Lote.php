@@ -97,7 +97,7 @@ class Lote implements \JsonSerializable
     	return array_merge(
     		array('codigo_lote' => $this->sequencial),
     		array('header_lote' => $headerLote),
-    		array('segmentos' => $detalhes),
+    		array('detalhes' => $detalhes),
     		array('trailer_lote' => $trailerLote)
 		);
     }
