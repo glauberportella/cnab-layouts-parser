@@ -83,6 +83,10 @@ class Picture
                 if (!is_numeric($value)) {
                     $msg = "%svalor '$value' não é número, formato requerido $format.";
 
+                    if (!empty(@$options['register_desc'])) {
+                        $msg = sprintf($msg, "{$options['register_desc']} > %s");
+                    }
+
                     if (!empty(@$options['field_desc'])) {
                         $msg = sprintf($msg, "{$options['field_desc']}: ");
                     }
@@ -112,6 +116,10 @@ class Picture
                     return \str_pad($value, (int) $m['tamanho1'], '0', STR_PAD_LEFT);
                 } else {
                     $msg = "%s$format' is not a valid format";
+
+                    if (!empty(@$options['register_desc'])) {
+                        $msg = sprintf($msg, "{$options['register_desc']} > %s");
+                    }
 
                     if (!empty(@$options['field_desc'])) {
                         $msg = sprintf($msg, "{$options['field_desc']}: ");

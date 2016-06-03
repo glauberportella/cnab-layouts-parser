@@ -57,11 +57,15 @@ class Lote implements \JsonSerializable
 		return $this->layout;
 	}
 
-	public function novoDetalhe()
+	public function novoDetalhe(array $excetoSegmentos = array())
 	{
 		$detalhe = new \stdClass;
 		if (isset($this->layout['detalhes'])) {
 			foreach ($this->layout['detalhes'] as $segmento => $segmentoDefinitions) {
+				// pula segmentos informados como "exceto" no parametro da função
+				if (in_array($segmento, $excetoSegmentos)) {
+					continue;
+				}
 				$detalhe->$segmento = new \stdClass;
 				foreach ($segmentoDefinitions as $field => $definition) {
 					$detalhe->$segmento->$field = (isset($definition['default'])) ? $definition['default'] : '';
