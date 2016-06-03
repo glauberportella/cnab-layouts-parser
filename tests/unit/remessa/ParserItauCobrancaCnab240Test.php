@@ -81,7 +81,7 @@ class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 		$detalhe = $lote->novoDetalhe();
 		// segmento p
 		$detalhe->segmento_p->lote_servico = $lote->sequencial;
-		$detalhe->segmento_p->nummero_sequencial_registro_lote = 1;
+		$detalhe->segmento_p->numero_sequencial_registro_lote = 1;
 		$detalhe->segmento_p->codigo_ocorrencia = '01';
 		$detalhe->segmento_p->agencia = 2932;
 		$detalhe->segmento_p->conta = 24992;
@@ -110,7 +110,7 @@ class ParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 		$detalhe->segmento_p->prazo_baixa = 0;
 		// segmento q
 		$detalhe->segmento_q->lote_servico = $lote->sequencial;
-		$detalhe->segmento_q->nummero_sequencial_registro_lote = 2;
+		$detalhe->segmento_q->numero_sequencial_registro_lote = 2;
 		$detalhe->segmento_q->codigo_ocorrencia = '01';
 		$detalhe->segmento_q->tipo_inscricao = 2;
 		$detalhe->segmento_q->inscricao_numero = '05346078000186';

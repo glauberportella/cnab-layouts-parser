@@ -150,9 +150,5 @@ class JsonSerializeTest extends \PHPUnit_Framework_TestCase
 
 		$remessaJson = json_encode($remessa);
 		$this->assertJson($remessaJson);
-
-		echo "\n";
-		echo $remessaJson;
-		echo "\n";
 	}
 }
