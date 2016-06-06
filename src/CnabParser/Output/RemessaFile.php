@@ -68,11 +68,15 @@ class RemessaFile extends IntercambioBancarioRemessaFileAbstract
 
 		foreach ($this->model->lotes as $lote) {
 			// header lote
-			$encoded[] = $this->encodeHeaderLote($lote);
+			if (!empty($lote->header))
+				$encoded[] = $this->encodeHeaderLote($lote);
+
 			// detalhes
 			$encoded[] = $this->encodeDetalhes($lote);
+
 			// trailer lote
-			$encoded[] = $this->encodeTrailerLote($lote);
+			if (!empty($lote->trailer))
+				$encoded[] = $this->encodeTrailerLote($lote);
 		}
 		
 		return implode(self::CNAB_EOL, $encoded);
@@ -80,7 +84,7 @@ class RemessaFile extends IntercambioBancarioRemessaFileAbstract
 
 	protected function encodeHeaderLote(Lote $model)
 	{
-		if (!isset($model->header))
+		if (!isset($model->header) || empty($model->header))
 			return;
 
 		$layout = $model->getLayout();
@@ -108,7 +112,7 @@ class RemessaFile extends IntercambioBancarioRemessaFileAbstract
 
 	protected function encodeTrailerLote(Lote $model)
 	{
-		if (!isset($model->trailer))
+		if (!isset($model->trailer) || empty($model->trailer))
 			return;
 
 		$layout = $model->getLayout();

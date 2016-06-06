@@ -35,17 +35,20 @@ class Lote implements \JsonSerializable
 		$this->layout = $layout;
 
 		$this->sequencial = $sequencial;
-		$this->header = new HeaderLote();
-		$this->trailer = new TrailerLote();
+		// inicia com header e trailer = null pois cnab400 pode não conter header e trailer de lotes (CEF SIGCB CNAB400 por exemplo)
+		$this->header = null;
+		$this->trailer = null;
 		$this->detalhes = array();
 
 		if (isset($this->layout['header_lote'])) {
+			$this->header = new HeaderLote();
 			foreach ($this->layout['header_lote'] as $field => $definition) {
 				$this->header->$field = (isset($definition['default'])) ? $definition['default'] : '';
 			}
 		}
 
 		if (isset($this->layout['trailer_lote'])) {
+			$this->trailer = new TrailerLote();
 			foreach ($this->layout['trailer_lote'] as $field => $definition) {
 				$this->trailer->$field = (isset($definition['default'])) ? $definition['default'] : '';
 			}
