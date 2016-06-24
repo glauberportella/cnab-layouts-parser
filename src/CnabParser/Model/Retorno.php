@@ -81,4 +81,20 @@ class Retorno
 
 		return $dados;
 	}
+
+	public function getTotalLotes()
+	{
+		return count($this->lotes);
+	}
+
+	public function getTotalTitulos()
+	{
+		$total = 0;
+
+		foreach ($this->lotes as $lote) {
+			$total += count($lote['titulos']);
+		}
+
+		return $total;
+	}
 }

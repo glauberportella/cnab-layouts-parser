@@ -83,5 +83,8 @@ class RetornoParserItauCobrancaCnab240Test extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(8, $retorno->trailer_arquivo->total_registros);
 		$this->assertEquals(0, $retorno->trailer_arquivo->zeros_01);
 		$this->assertEquals('', $retorno->trailer_arquivo->brancos_02);
+
+		$this->assertEquals(1, $retorno->getTotalLotes());
+		$this->assertEquals(2, $retorno->getTotalTitulos());
 	}
 }
