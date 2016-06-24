@@ -76,6 +76,15 @@ class Layout
 			: $this->config['layout'];
 	}
 
+	public function getPrimeiroCodigoSegmentoRetorno()
+	{
+		$layout = $this->getRetornoLayout();
+		$segmentos = array_keys($layout['detalhes']);
+		$primeiroSegmento = $segmentos[0];
+		$partes = explode('_', $primeiroSegmento);
+		return strtolower($partes[count($partes) - 1]);
+	}
+
 	public function getUltimoCodigoSegmentoRetorno()
 	{
 		$layout = $this->getRetornoLayout();

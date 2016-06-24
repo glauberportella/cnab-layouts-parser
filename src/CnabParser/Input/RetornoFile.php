@@ -25,6 +25,7 @@ use CnabParser\IntercambioBancarioRetornoFileAbstract;
 use CnabParser\Exception\RetornoException;
 use CnabParser\Format\Picture;
 use CnabParser\Model\Linha;
+use CnabParser\Model\Lote;
 
 class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 {
@@ -103,20 +104,66 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 		);
 
 		$indiceDetalhe = 0;
+		$codigoLote = null;
+		$primeiroCodigoSegmentoLayout = $this->layout->getPrimeiroCodigoSegmentoRetorno();
 		$ultimoCodigoSegmentoLayout = $this->layout->getUltimoCodigoSegmentoRetorno();
 		
-		foreach ($this->linhas as $linhaStr) {
+		$lote = null;
+		$titulos = array(); // titulos tem titulo
+		$titulo = array(); // titulo tem segmentos
+		$segmentos = array();
+		foreach ($this->linhas as $index => $linhaStr) {
 			$linha = new Linha($linhaStr, $this->layout, 'retorno');
 			$tipoRegistro = (int)$linha->obterValorCampo($defTipoRegistro);
-			if ($tipoRegistro !== IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE && 
+
+			if ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_ARQUIVO)
+				continue;
+			
+			switch ($tipoRegistro) {
+				case IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE:
+					$codigoLote = $linha->obterValorCampo($defCodigoLote);
+					$lote = array(
+						'codigo_lote' => $codigoLote,
+						'header_lote' => $this->model->decodeHeaderLote($linha),
+						'trailer_lote' => $this->model->decodeTrailerLote($linha),
+						'titulos' => array(),
+					);
+					break;
+				case IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES:
+					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
+					$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
+					$dadosSegmento = $linha->getDadosSegmento('segmento_'.strtolower($codigoSegmento));
+					$segmentos[] = array($codigoSegmento => $dadosSegmento);
+					$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
+					$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
+					// se codigoSegmento é ultimo OU proximo codigoSegmento é o primeiro
+					// entao fecha o titulo e adiciona em $detalhes
+					if (strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout) ||
+						strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout)) {
+						$titulo = $segmentos;
+						$lote['titulos'][] = $titulo;
+						// novo titulo, novos segmentos
+						$titulo = array();
+						$segmentos = array();
+					}
+					break;
+				case IntercambioBancarioRetornoFileAbstract::REGISTRO_TRAILER_ARQUIVO:
+					$this->model->lotes[] = $lote;
+					$titulos = array();
+					$segmentos = array();
+					break;
+			}
+
+			/* OLD
+			if ($tipoRegistro !== IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE || 
 				$tipoRegistro !== IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES) {
 				continue;
 			}
 
-			if ($tipoRegistro === 1) {
+			if ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE) {
 				$codigoLote = $linha->obterValorCampo($defCodigoLote);
 				$this->model->lotes[$codigoLote] = array();
-			} elseif ($tipoRegistro === 3) {
+			} elseif ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES) {
 				$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
 				$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
 				
@@ -128,6 +175,7 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 					$indiceDetalhe++;
 				}
 			}
+			*/
 		}
 	}
 

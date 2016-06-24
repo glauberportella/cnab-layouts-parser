@@ -77,4 +77,14 @@ class Linha
 		return Picture::decode(substr($this->linhaStr, $inicio, $tamanho), $formato, $opcoes);
 	}
 
+	public function getLayout()
+	{
+		return $this->layout;
+	}
+
+	public function getTipo()
+	{
+		return $this->tipo;
+	}
+
 }

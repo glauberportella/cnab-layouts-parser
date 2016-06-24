@@ -22,6 +22,7 @@
 namespace CnabParser\Model;
 
 use StdClass AS DataContainer;
+use CnabParser\Model\Linha;
 
 class Retorno
 {
@@ -45,5 +46,39 @@ class Retorno
 		$this->header_arquivo = new DataContainer();
 		$this->trailer_arquivo = new DataContainer();
 		$this->lotes = array();
+	}
+
+	public function decodeHeaderLote(Linha $linha)
+	{
+		$dados = array();
+		
+		$layout = $linha->getTipo() === 'remessa'
+			? $linha->getLayout()->getRemessaLayout()
+			: $linha->getLayout()->getRetornoLayout();
+		
+		$campos = $layout['header_lote'];
+		
+		foreach ($campos as $nome => $definicao) {
+			$dados[$nome] = $linha->obterValorCampo($definicao);
+		}
+
+		return $dados;
+	}
+
+	public function decodeTrailerLote(Linha $linha)
+	{
+		$dados = array();
+		
+		$layout = $linha->getTipo() === 'remessa'
+			? $linha->getLayout()->getRemessaLayout()
+			: $linha->getLayout()->getRetornoLayout();
+		
+		$campos = $layout['trailer_lote'];
+		
+		foreach ($campos as $nome => $definicao) {
+			$dados[$nome] = $linha->obterValorCampo($definicao);
+		}
+
+		return $dados;
 	}
 }
