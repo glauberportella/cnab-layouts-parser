@@ -28,11 +28,11 @@ $remessa = new Remessa($remessaLayout);
 // header arquivo
 $remessa->header->codigo_banco = 341;
 $remessa->header->tipo_inscricao = 2;
-$remessa->header->inscricao_numero = '05346078000186';
+$remessa->header->inscricao_numero = '12234567000186';
 $remessa->header->agencia = 2932;
 $remessa->header->conta = 24992;
 $remessa->header->dac = 9;
-$remessa->header->nome_empresa = 'MACWEB SOLUTIONS LTDA';
+$remessa->header->nome_empresa = 'NOME DA EMPRESA';
 $remessa->header->data_geracao = date('dmY');
 $remessa->header->hora_geracao = date('His');
 $remessa->header->numero_sequencial_arquivo_retorno = 1;
