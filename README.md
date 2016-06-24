@@ -2,9 +2,11 @@
 
 # CNAB LAYOUTS PARSER
 
-# Usando o Parser
+# Instalaçao
 
-**Obs.:** Execute `composer install` para instalar as dependências.
+Instale via composer:
+
+`composer install glauberportella/cnab-layouts-parser`
 
 # Exemplos
 

@@ -28,11 +28,14 @@ use CnabParser\Format\Picture;
 
 abstract class IntercambioBancarioRetornoFileAbstract extends IntercambioBancarioFileAbstract
 {
+	// Para CNAB240
 	const REGISTRO_HEADER_ARQUIVO = 0;
 	const REGISTRO_HEADER_LOTE = 1;
 	const REGISTRO_DETALHES = 3;
 	const REGISTRO_TRAILER_LOTE = 5;
 	const REGISTRO_TRAILER_ARQUIVO = 9;
+
+	// Para CNAB400
 
 	/**
 	 * @var CnabParser\Parser\Layout
