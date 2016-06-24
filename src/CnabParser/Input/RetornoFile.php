@@ -110,7 +110,6 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 		
 		$lote = null;
 		$titulos = array(); // titulos tem titulo
-		$titulo = array(); // titulo tem segmentos
 		$segmentos = array();
 		foreach ($this->linhas as $index => $linhaStr) {
 			$linha = new Linha($linhaStr, $this->layout, 'retorno');
@@ -133,17 +132,15 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
 					$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
 					$dadosSegmento = $linha->getDadosSegmento('segmento_'.strtolower($codigoSegmento));
-					$segmentos[] = array($codigoSegmento => $dadosSegmento);
+					$segmentos[$codigoSegmento] = $dadosSegmento;
 					$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
 					$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
 					// se codigoSegmento é ultimo OU proximo codigoSegmento é o primeiro
 					// entao fecha o titulo e adiciona em $detalhes
 					if (strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout) ||
 						strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout)) {
-						$titulo = $segmentos;
-						$lote['titulos'][] = $titulo;
+						$lote['titulos'][] = $segmentos;
 						// novo titulo, novos segmentos
-						$titulo = array();
 						$segmentos = array();
 					}
 					break;
