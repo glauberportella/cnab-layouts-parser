@@ -2,7 +2,7 @@
 
 # CNAB LAYOUTS PARSER
 
-# Instalaçao
+# Instalação
 
 Instale via composer:
 
