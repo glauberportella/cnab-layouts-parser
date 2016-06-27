@@ -90,7 +90,7 @@ class Retorno
 	public function getTotalTitulos()
 	{
 		$total = 0;
-
+		
 		foreach ($this->lotes as $lote) {
 			$total += count($lote['titulos']);
 		}

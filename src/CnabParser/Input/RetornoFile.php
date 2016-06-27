@@ -170,21 +170,11 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 			'picture' => '9(6)',
 		);
 
-		/* TODO
-		$defCodigoLote = array(
-			'pos' => array(4, 7),
-			'picture' => '9(4)',
-		);
-
-
-		*/
-
 		$codigoLote = null;
 		$primeiroCodigoSegmentoLayout = $this->layout->getPrimeiroCodigoSegmentoRetorno();
 		$ultimoCodigoSegmentoLayout = $this->layout->getUltimoCodigoSegmentoRetorno();
 		
 		$lote = null;
-		$titulos = array(); // titulos tem titulo
 		$segmentos = array();
 		foreach ($this->linhas as $index => $linhaStr) {
 			$linha = new Linha($linhaStr, $this->layout, 'retorno');
@@ -194,7 +184,7 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 				continue;
 
 			if ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_TRAILER_ARQUIVO) {
-				$titulos = array();
+				$lote['titulos'][] = $segmentos;
 				$segmentos = array();
 				break;
 			}
@@ -206,50 +196,21 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 			$segmentos[$codigoSegmento] = $dadosSegmento;
 			$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
 			$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
-			// se codigoSegmento é ultimo OU proximo codigoSegmento é o primeiro
+			// se ( 
+			// 	proximo codigoSegmento é o primeiro OU
+			// 	codigoSegmento é ultimo
+			// )
 			// entao fecha o titulo e adiciona em $detalhes
-			if (strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout) ||
-				strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout)) {
+			if (
+				strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout) ||
+				strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout)
+			) {
 				$lote['titulos'][] = $segmentos;
-				$this->model->lotes[] = $lote;
 				// novo titulo, novos segmentos
 				$segmentos = array();
 			}
-			
-			/* CNAB240
-			switch ($tipoRegistro) {
-				case IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE:
-					$codigoLote = $linha->obterValorCampo($defCodigoLote);
-					$lote = array(
-						'codigo_lote' => $codigoLote,
-						'header_lote' => $this->model->decodeHeaderLote($linha),
-						'trailer_lote' => $this->model->decodeTrailerLote($linha),
-						'titulos' => array(),
-					);
-					break;
-				case IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES:
-					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
-					$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
-					$dadosSegmento = $linha->getDadosSegmento('segmento_'.strtolower($codigoSegmento));
-					$segmentos[$codigoSegmento] = $dadosSegmento;
-					$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
-					$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
-					// se codigoSegmento é ultimo OU proximo codigoSegmento é o primeiro
-					// entao fecha o titulo e adiciona em $detalhes
-					if (strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout) ||
-						strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout)) {
-						$lote['titulos'][] = $segmentos;
-						// novo titulo, novos segmentos
-						$segmentos = array();
-					}
-					break;
-				case IntercambioBancarioRetornoFileAbstract::REGISTRO_TRAILER_ARQUIVO:
-					$this->model->lotes[] = $lote;
-					$titulos = array();
-					$segmentos = array();
-					break;
-			}
-			*/
 		}
+
+		$this->model->lotes[] = $lote;
 	}
 }
