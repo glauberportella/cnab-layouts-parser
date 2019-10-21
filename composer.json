@@ -1,6 +1,6 @@
 {
-	"name": "glauberportella/cnab-layouts-parser",
-    "description": "Parser de arquivos de configuração CNAB gerados no projeto https://github.com/glauberportella/cnab-layouts",
+	"name": "mago/cnab-layouts-parser",
+    "description": "Parser de arquivos de configuração CNAB gerados no projeto https://github.com/joaopedromago/cnab-layouts",
     "type": "project",
     "license": "MIT",
     "authors": [
@@ -9,13 +9,9 @@
             "email": "glauberportella@gmail.com"
         }
     ],
-    "require": {
-		"symfony/yaml": "2.7.*"
-	},
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": { "": "src/" }
     },
-    "require-dev": {
-        "codeclimate/php-test-reporter": "^0.3.2"
-    }
+    "require": {}
 }
