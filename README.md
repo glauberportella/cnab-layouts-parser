@@ -1,12 +1,14 @@
-[![Build Status](https://travis-ci.org/glauberportella/cnab-layouts-parser.svg?branch=master)](https://travis-ci.org/glauberportella/cnab-layouts-parser) [![Code Climate](https://codeclimate.com/github/glauberportella/cnab-layouts-parser/badges/gpa.svg)](https://codeclimate.com/github/glauberportella/cnab-layouts-parser)
-
 # CNAB LAYOUTS PARSER
+
+# Instalação
+
+Fork do Repo: https://github.com/glauberportella/cnab-layouts-parser
 
 # Instalação
 
 Instale via composer:
 
-`composer install glauberportella/cnab-layouts-parser`
+`composer install composer require mago/cnab-layouts-parser`
 
 # Exemplos
 
