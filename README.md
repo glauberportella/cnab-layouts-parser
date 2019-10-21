@@ -1,6 +1,6 @@
 # CNAB LAYOUTS PARSER
 
-# Instalação
+# Créditos
 
 Fork do Repo: https://github.com/glauberportella/cnab-layouts-parser
 
