@@ -190,19 +190,8 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 			$segmentos[$codigoSegmento] = $dadosSegmento;
 			$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
 			$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
-			// se ( 
-			// 	proximo codigoSegmento é o primeiro OU
-			// 	codigoSegmento é ultimo
-			// )
-			// entao fecha o titulo e adiciona em $detalhes
-			if (
-				strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout) ||
-				strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout)
-			) {
-				$lote['titulos'][] = $segmentos;
-				// novo titulo, novos segmentos
-				$segmentos = array();
-			}
+			// sempre vai adicionando os segmentos ao título
+			array_push($lote['titulos'], $segmentos);
 		}
 
 		$this->model->lotes[] = $lote;
