@@ -143,9 +143,9 @@ class Picture
                     $tamanho_left = (int) $m['tamanho1'];
                     $tamanho_right = (int) $m['tamanho2'];
                     $valor_left = self::parseNumber(substr($value, 0, $tamanho_left));
-                    $valor_right = '0.'.substr($value, $tamanho_left, $tamanho_right);
-                    if ((double) $valor_right > 0) {
-                        return $valor_left + (double) $valor_right;
+                    $valor_right = substr($value, $tamanho_left, $tamanho_right);
+                    if ((float) $valor_right > 0) {
+                        return $valor_left . "." . $valor_right;
                     } else {
                         return self::parseNumber($valor_left);
                     }
