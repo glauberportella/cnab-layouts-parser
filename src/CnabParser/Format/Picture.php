@@ -147,7 +147,7 @@ class Picture
                     if ((float) $valor_right > 0) {
                         return $valor_left . "." . $valor_right;
                     } else {
-                        return self::parseNumber($valor_left);
+                        return $valor_left;
                     }
                 } elseif (!$m['tipo2']) {
                     return self::parseNumber($value);
