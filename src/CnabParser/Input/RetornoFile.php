@@ -73,7 +73,7 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 	protected function decodeLotes()
 	{
 		$tipoLayout = $this->layout->getLayout();
-		
+
 		if (strtoupper($tipoLayout) === strtoupper('cnab240')) {
 			$this->decodeLotesCnab240();
 		} elseif (strtoupper($tipoLayout) === strtoupper('cnab400')) {
@@ -104,19 +104,22 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 		);
 
 		$codigoLote = null;
-		$primeiroCodigoSegmentoLayout = $this->layout->getPrimeiroCodigoSegmentoRetorno();
-		$ultimoCodigoSegmentoLayout = $this->layout->getUltimoCodigoSegmentoRetorno();
-		
+
 		$lote = null;
-		$titulos = array(); // titulos tem titulo
-		$segmentos = array();
+
+		$segmentos = []; // segmentos variável auxiliar
+		$loteAtual = null; // código lote auxiliar
+		$segmentosLote = array(); // segmentos para inserir no lote
+
+		$insert = false;
+
 		foreach ($this->linhas as $index => $linhaStr) {
 			$linha = new Linha($linhaStr, $this->layout, 'retorno');
-			$tipoRegistro = (int)$linha->obterValorCampo($defTipoRegistro);
+			$tipoRegistro = (int) $linha->obterValorCampo($defTipoRegistro);
 
 			if ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_ARQUIVO)
 				continue;
-			
+
 			switch ($tipoRegistro) {
 				case IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_LOTE:
 					$codigoLote = $linha->obterValorCampo($defCodigoLote);
@@ -128,31 +131,28 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 					);
 					break;
 				case IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES:
-					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
-					$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
-					$dadosSegmento = $linha->getDadosSegmento('segmento_'.strtolower($codigoSegmento));
-					$segmentos[$codigoSegmento] = $dadosSegmento;
-					$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
-					$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
-					// se ( 
-					// 	proximo codigoSegmento é o primeiro OU
-					// 	codigoSegmento é ultimo
-					// )
-					// entao fecha o titulo e adiciona em $detalhes
-					if (
-						strtolower($proximoCodigoSegmento) === strtolower($primeiroCodigoSegmentoLayout) ||
-						strtolower($codigoSegmento) === strtolower($ultimoCodigoSegmentoLayout)
-					) {
-						$lote['titulos'][] = $segmentos;
-						// novo titulo, novos segmentos
-						$segmentos = array();
+					if ($loteAtual == null || $loteAtual != $lote["codigo_lote"]) {
+						$loteAtual = $lote["codigo_lote"];
+						if ($loteAtual != null) {
+							$insert = true;
+						}
 					}
+
+					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
+
+					$dadosSegmento = $linha->getDadosSegmento('segmento_' . strtolower($codigoSegmento));
+
+					$segmentos[$codigoSegmento] = $dadosSegmento;
+
+					$segmentosLote[] = $segmentos;
 					break;
-				case IntercambioBancarioRetornoFileAbstract::REGISTRO_TRAILER_ARQUIVO:
-					$this->model->lotes[] = $lote;
-					$titulos = array();
-					$segmentos = array();
-					break;
+			}
+
+			if ($insert) {
+				$insert = false;
+				$lote['titulos'][] = $segmentosLote;
+				$segmentosLote = array();
+				$this->model->lotes[] = $lote;
 			}
 		}
 	}
@@ -178,12 +178,12 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 		$codigoLote = null;
 		$primeiroCodigoSegmentoLayout = $this->layout->getPrimeiroCodigoSegmentoRetorno();
 		$ultimoCodigoSegmentoLayout = $this->layout->getUltimoCodigoSegmentoRetorno();
-		
+
 		$lote = null;
 		$segmentos = array();
 		foreach ($this->linhas as $index => $linhaStr) {
 			$linha = new Linha($linhaStr, $this->layout, 'retorno');
-			$tipoRegistro = (int)$linha->obterValorCampo($defTipoRegistro);
+			$tipoRegistro = (int) $linha->obterValorCampo($defTipoRegistro);
 
 			if ($tipoRegistro === IntercambioBancarioRetornoFileAbstract::REGISTRO_HEADER_ARQUIVO)
 				continue;
@@ -197,7 +197,7 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 			// estamos tratando detalhes
 			$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
 			$numeroRegistro = $linha->obterValorCampo($defNumeroRegistro);
-			$dadosSegmento = $linha->getDadosSegmento('segmento_'.strtolower($codigoSegmento));
+			$dadosSegmento = $linha->getDadosSegmento('segmento_' . strtolower($codigoSegmento));
 			$segmentos[$codigoSegmento] = $dadosSegmento;
 			$proximaLinha = new Linha($this->linhas[$index + 1], $this->layout, 'retorno');
 			$proximoCodigoSegmento = $proximaLinha->obterValorCampo($defCodigoSegmento);
