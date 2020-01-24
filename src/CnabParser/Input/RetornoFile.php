@@ -152,6 +152,7 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 				$insert = false;
 				$lote['titulos'][] = $segmentosLote;
 				$segmentosLote = array();
+				$segmentos = array();
 				$this->model->lotes[] = $lote;
 			}
 		}
