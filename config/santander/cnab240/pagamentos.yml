@@ -1,0 +1,1233 @@
+# FORMATO: BANCO SANTANDER - FEBRABAN CNAB240
+# OBJETIVO DO ARQUIVO: COBRANÇA BANCÁRIA
+#
+# TAMANHO DO REGISTRO
+# O Tamanho do Registro é de 240 bytes.
+#
+# ALINHAMENTO DE CAMPOS
+# - Campos Numéricos (9) = Sempre à direita e preenchidos com zeros à esquerda.
+# - Campos Alfanuméricos (X) = Sempre à esquerda e preenchidos com brancos à direita.
+#
+servico: "pagamento"
+
+versao: "2017"
+
+layout: "cnab240"
+
+remessa:
+  header_arquivo:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+      default: 0
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 0
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    tipo_inscricao:
+      pos: [18, 18]
+      picture: "9(1)"
+    numero_inscricao:
+      pos: [19, 32]
+      picture: "9(14)"
+    codigo_do_convenio_no_banco:
+      pos: [033, 052]
+      picture: "X(020)"
+    agencia_mantenedora_da_conta:
+      pos: [053, 057]
+      picture: "9(005)"
+    digito_verificador_da_agencia:
+      pos: [058, 058]
+      picture: "X(001)"
+    numero_da_conta_corrente:
+      pos: [059, 070]
+      picture: "9(012)"
+    digito_verificador_da_conta:
+      pos: [071, 071]
+      picture: "X(001)"
+    digito_verificador_da_agencia_conta:
+      pos: [072, 072]
+      picture: "X(001)"
+    nome_da_empresa:
+      pos: [073, 102]
+      picture: "X(030)"
+    nome_do_banco:
+      pos: [103, 132]
+      picture: "X(030)"
+      default: "Banco Santander"
+    exclusivo_banco_02:
+      pos: [133, 142]
+      picture: "X(010)"
+      default: ""
+    codigo_remessa_retorno:
+      pos: [143, 143]
+      picture: "9(001)"
+    data_da_geracao_do_arquivo:
+      pos: [144, 151]
+      picture: "9(008)"
+    hora_da_geracao_do_arquivo:
+      pos: [152, 157]
+      picture: "9(006)"
+    numero_sequencial_do_arquivo:
+      pos: [158, 163]
+      picture: "9(006)"
+    numero_da_versao_do_layout:
+      pos: [164, 166]
+      picture: "9(003)"
+      default: "060"
+    densidade_de_gravacao_arquivo:
+      pos: [167, 171]
+      picture: "9(005)"
+    uso_reservado_do_banco:
+      pos: [172, 191]
+      picture: "X(020)"
+    uso_reservado_da_empresa:
+      pos: [192, 211]
+      picture: "X(020)"
+    exclusivo_banco_03:
+      pos: [212, 230]
+      picture: "X(019)"
+      default: ""
+    ocorrencias_para_o_retorno:
+      pos: [231, 240]
+      picture: "X(010)"
+
+  trailer_arquivo:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+      default: "9999"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 9
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    quantidade_lotes:
+      pos: [18, 23]
+      picture: "9(6)"
+    quantidade_registros:
+      pos: [24, 29]
+      picture: "9(6)"
+    exclusivo_banco_02:
+      pos: [30, 240]
+      picture: "X(211)"
+      default: ""
+
+  header_lote:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 1
+    tipo_operacao:
+      pos: [9, 9]
+      picture: "X(1)"
+      default: "C"
+    tipo_servico:
+      pos: [10, 11]
+      picture: "9(2)"
+      default: 1
+    forma_de_lancamento:
+      pos: [012, 013]
+      picture: "9(002)"
+    numero_da_versao_do_lote:
+      pos: [014, 016]
+      picture: "9(003)"
+    exclusivo_banco_01:
+      pos: [017, 017]
+      picture: "X(001)"
+      default: ""
+    tipo_de_inscricao_da_empresa:
+      pos: [018, 018]
+      picture: "9(001)"
+    numero_de_inscricao_da_empresa:
+      pos: [019, 032]
+      picture: "9(014)"
+    codigo_do_convenio_no_banco:
+      pos: [033, 052]
+      picture: "X(020)"
+    agencia_mantenedora_da_conta:
+      pos: [053, 057]
+      picture: "9(005)"
+    digito_verificador_da_agencia:
+      pos: [058, 058]
+      picture: "X(001)"
+    numero_da_conta_corrente:
+      pos: [059, 070]
+      picture: "9(012)"
+    digito_verificador_da_conta:
+      pos: [071, 071]
+      picture: "X(001)"
+    digito_verificador_da_agencia_conta:
+      pos: [072, 072]
+      picture: "X(001)"
+    nome_da_empresa:
+      pos: [073, 102]
+      picture: "X(030)"
+    mensagem:
+      pos: [103, 142]
+      picture: "X(040)"
+    endereco:
+      pos: [143, 172]
+      picture: "X(030)"
+    numero:
+      pos: [173, 177]
+      picture: "9(005)"
+    complemento_do_endereco:
+      pos: [178, 192]
+      picture: "X(015)"
+    cidade:
+      pos: [193, 212]
+      picture: "X(020)"
+    cep:
+      pos: [213, 217]
+      picture: "9(005)"
+    complemento_do_cep:
+      pos: [218, 220]
+      picture: "9(003)"
+    uf:
+      pos: [221, 222]
+      picture: "X(002)"
+    exclusivo_banco_02:
+      pos: [223, 230]
+      picture: "X(008)"
+      default: ""
+    ocorrencias_para_o_retorno:
+      pos: [231, 240]
+      picture: "X(010)"
+
+  trailer_lote:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 5
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    quantidade_registros:
+      pos: [18, 23]
+      picture: "9(6)"
+    somatorio_valores:
+      pos: [24, 41]
+      picture: "9(16)"
+    somatorio_quantidade:
+      pos: [42, 59]
+      picture: "9(13)"
+    numero_aviso_debito:
+      pos: [60, 65]
+      picture: "9(6)"
+    exclusivo_banco_02:
+      pos: [66, 230]
+      picture: "X(16)"
+      default: ""
+    ocorrencia_retorno:
+      pos: [231, 240]
+      picture: "X(10)"
+
+  detalhes:
+    segmento_a:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_da_instrucao_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_camara_compensacao:
+        pos: [018, 020]
+        picture: "9(003)"
+      codigo_do_banco_favorecido:
+        pos: [021, 023]
+        picture: "9(003)"
+      codigo_da_agencia_favorecido:
+        pos: [024, 028]
+        picture: "9(005)"
+      digito_verificador_da_agencia:
+        pos: [029, 029]
+        picture: "X(001)"
+      conta_corrente_do_favorecido:
+        pos: [030, 041]
+        picture: "9(012)"
+      digito_verificador_da_conta:
+        pos: [042, 042]
+        picture: "X(001)"
+      digito_verificador_da_agencia_conta:
+        pos: [043, 043]
+        picture: "X(001)"
+      nome_do_favorecido:
+        pos: [044, 073]
+        picture: "X(030)"
+      nro._do_documento_cliente:
+        pos: [074, 093]
+        picture: "X(020)"
+      data_do_pagamento:
+        pos: [094, 101]
+        picture: "9(008)"
+      tipo_da_moeda:
+        pos: [102, 104]
+        picture: "X(003)"
+      quantidade_de_moeda:
+        pos: [105, 119]
+        picture: "9(010)"
+      valor_do_pagamento:
+        pos: [120, 134]
+        picture: "9(013)"
+      nro._do_documento_banco:
+        pos: [135, 154]
+        picture: "X(020)"
+      data_real_do_pagamento:
+        pos: [155, 162]
+        picture: "9(008)"
+      valor_real_do_pagamento:
+        pos: [163, 177]
+        picture: "9(013)"
+      mensagem:
+        pos: [178, 217]
+        picture: "X(040)"
+      finalidade_do_doc:
+        pos: [218, 219]
+        picture: "X(002)"
+      finalidade_de_ted:
+        pos: [220, 224]
+        picture: "X(005)"
+      codigo_finalidade_complementar:
+        pos: [225, 226]
+        picture: "X(002)"
+      exclusivo_banco_01:
+        pos: [227, 229]
+        picture: "X(003)"
+        default: ""
+      emissao_de_aviso_ao_favorecido:
+        pos: [230, 230]
+        picture: "X(001)"
+      ocorrencias_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"
+
+    segmento_b:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      exclusivo_banco_01:
+        pos: [015, 017]
+        picture: "X(003)"
+        default: ""
+      tipo_de_inscricao_do_favorecido:
+        pos: [018, 018]
+        picture: "9(001)"
+      cnpj_cpf_do_favorecido:
+        pos: [019, 032]
+        picture: "9(014)"
+      logradouro_do_favorecido:
+        pos: [033, 062]
+        picture: "X(030)"
+      numero_do_local_do_favorecido:
+        pos: [063, 067]
+        picture: "9(005)"
+      complemento_do_local_favorecido:
+        pos: [068, 082]
+        picture: "X(015)"
+      bairro_do_favorecido:
+        pos: [083, 097]
+        picture: "X(015)"
+      cidade_do_favorecido:
+        pos: [098, 117]
+        picture: "X(020)"
+      cep_do_favorecido:
+        pos: [118, 125]
+        picture: "9(008)"
+      estado_do_favorecido:
+        pos: [126, 127]
+        picture: "X(002)"
+      data_de_vencimento:
+        pos: [128, 135]
+        picture: "9(008)"
+      valor_do_documento:
+        pos: [136, 150]
+        picture: "9(013)"
+      valor_do_abatimento:
+        pos: [151, 165]
+        picture: "9(013)"
+      valor_do_desconto:
+        pos: [166, 180]
+        picture: "9(013)"
+      valor_da_mora:
+        pos: [181, 195]
+        picture: "9(013)"
+      valor_da_multa:
+        pos: [196, 210]
+        picture: "9(013)"
+      horario_de_envio_de_ted:
+        pos: [211, 214]
+        picture: "9(004)"
+      exclusivo_banco_02:
+        pos: [215, 225]
+        picture: "X(011)"
+        default: ""
+      codigo_historico_para_crédito:
+        pos: [226, 229]
+        picture: "9(004)"
+      emissao_de_aviso_ao_favorecido:
+        pos: [230, 230]
+        picture: "9(001)"
+      exclusivo_banco_03:
+        pos: [231, 231]
+        picture: "X(001)"
+        default: ""
+      ted_para_instituicao_financeira:
+        pos: [232, 232]
+        picture: "X(001)"
+      identificacao_da_if_no_spb:
+        pos: [233, 240]
+        picture: "X(008)"
+
+    segmento_j:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_de_instrução_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_de_barras:
+        pos: [018, 061]
+        picture: "X(044)"
+      nome_do_cedente:
+        pos: [062, 091]
+        picture: "X(030)"
+      data_do_vencimento:
+        pos: [092, 099]
+        picture: "9(008)"
+      valor_nominal_do_titulo:
+        pos: [100, 114]
+        picture: "9(013)"
+      valor_desconto_abatimento:
+        pos: [115, 129]
+        picture: "9(013)"
+      valor_multa_juros:
+        pos: [130, 144]
+        picture: "9(013)"
+      data_do_pagamento:
+        pos: [145, 152]
+        picture: "9(008)"
+      valor_do_pagamento:
+        pos: [153, 167]
+        picture: "9(013)"
+      quantidade_de_moeda:
+        pos: [168, 182]
+        picture: "9(010)"
+      numero_do_documento_cliente:
+        pos: [183, 202]
+        picture: "X(020)"
+      numero_do_documento_banco:
+        pos: [203, 222]
+        picture: "X(020)"
+      codigo_da_moeda:
+        pos: [223, 224]
+        picture: "9(002)"
+      exclusivo_banco_01:
+        pos: [225, 230]
+        picture: "X(006)"
+        default: ""
+      ocorrências_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"
+
+    segmento_j_52:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      exclusivo_banco_01:
+        pos: [015, 015]
+        picture: "X(001)"
+        default: ""
+      codigo_de_movimento_remessa:
+        pos: [016, 017]
+        picture: "9(002)"
+      identificacao_registro_:
+        pos: [018, 019]
+        picture: "9(002)"
+      tipo_de_inscricao_01:
+        pos: [020, 020]
+        picture: "9(001)"
+      cpf_cnpj_do_sacado:
+        pos: [021, 035]
+        picture: "9(015)"
+      nome_do_sacado:
+        pos: [036, 075]
+        picture: "X(040)"
+      tipo_de_inscricao_02:
+        pos: [076, 076]
+        picture: "9(001)"
+      cpf_cnpj_do_cedente:
+        pos: [077, 091]
+        picture: "9(015)"
+      nome_do_cedente:
+        pos: [092, 131]
+        picture: "X(040)"
+      tipo_de_inscricao_03:
+        pos: [132, 132]
+        picture: "9(001)"
+      cpf_cnpj_do_sacador:
+        pos: [133, 147]
+        picture: "9(015)"
+      nome_do_sacador:
+        pos: [148, 187]
+        picture: "X(040)"
+      exclusivo_banco_02:
+        pos: [188, 240]
+        picture: "X(053)"
+        default: ""
+
+    segmento_o:
+      codigo_do_banco:
+        pos: [001, 003]
+        picture: "9(003)"
+      lote_de_serviço:
+        pos: [004, 007]
+        picture: "9(004)"
+      tipo_de_registro:
+        pos: [008, 008]
+        picture: "9(001)"
+      numero_sequencial_do_registro_no_lote:
+        pos: [009, 013]
+        picture: "9(005)"
+      codigo_segmento_no_registro_detalhe:
+        pos: [014, 014]
+        picture: "X(001)"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_da_instrução_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_de_barras:
+        pos: [018, 061]
+        picture: "X(044)"
+      nome_concessionaria_orgão_publico:
+        pos: [062, 091]
+        picture: "X(030)"
+      data_de_vencimento:
+        pos: [092, 099]
+        picture: "9(008)"
+      data_do_pagamento:
+        pos: [100, 107]
+        picture: "9(008)"
+      valor_total_do_pagamento:
+        pos: [108, 122]
+        picture: "9(013)"
+      nro_do_documento_cliente:
+        pos: [123, 142]
+        picture: "X(020)"
+      nro_do_documento_banco:
+        pos: [143, 162]
+        picture: "X(020)"
+      exclusivo_banco_01:
+        pos: [163, 230]
+        picture: "X(068)"
+        default: ""
+      ocorrências_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"
+
+retorno:
+  header_arquivo:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+      default: 0
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 0
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    tipo_inscricao:
+      pos: [18, 18]
+      picture: "9(1)"
+    numero_inscricao:
+      pos: [19, 32]
+      picture: "9(14)"
+    codigo_do_convenio_no_banco:
+      pos: [033, 052]
+      picture: "X(020)"
+    agencia_mantenedora_da_conta:
+      pos: [053, 057]
+      picture: "9(005)"
+    digito_verificador_da_agencia:
+      pos: [058, 058]
+      picture: "X(001)"
+    numero_da_conta_corrente:
+      pos: [059, 070]
+      picture: "9(012)"
+    digito_verificador_da_conta:
+      pos: [071, 071]
+      picture: "X(001)"
+    digito_verificador_da_agencia_conta:
+      pos: [072, 072]
+      picture: "X(001)"
+    nome_da_empresa:
+      pos: [073, 102]
+      picture: "X(030)"
+    nome_do_banco:
+      pos: [103, 132]
+      picture: "X(030)"
+      default: "Banco Santander"
+    exclusivo_banco_02:
+      pos: [133, 142]
+      picture: "X(010)"
+      default: ""
+    codigo_remessa_retorno:
+      pos: [143, 143]
+      picture: "9(001)"
+    data_da_geracao_do_arquivo:
+      pos: [144, 151]
+      picture: "9(008)"
+    hora_da_geracao_do_arquivo:
+      pos: [152, 157]
+      picture: "9(006)"
+    numero_sequencial_do_arquivo:
+      pos: [158, 163]
+      picture: "9(006)"
+    numero_da_versao_do_layout:
+      pos: [164, 166]
+      picture: "9(003)"
+      default: "060"
+    densidade_de_gravacao_arquivo:
+      pos: [167, 171]
+      picture: "9(005)"
+    uso_reservado_do_banco:
+      pos: [172, 191]
+      picture: "X(020)"
+    uso_reservado_da_empresa:
+      pos: [192, 211]
+      picture: "X(020)"
+    exclusivo_banco_03:
+      pos: [212, 230]
+      picture: "X(019)"
+      default: ""
+    ocorrencias_para_o_retorno:
+      pos: [231, 240]
+      picture: "X(010)"
+
+  trailer_arquivo:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+      default: "9999"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 9
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    quantidade_lotes:
+      pos: [18, 23]
+      picture: "9(6)"
+    quantidade_registros:
+      pos: [24, 29]
+      picture: "9(6)"
+    exclusivo_banco_02:
+      pos: [30, 240]
+      picture: "X(211)"
+      default: ""
+
+  header_lote:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 1
+    tipo_operacao:
+      pos: [9, 9]
+      picture: "X(1)"
+      default: "C"
+    tipo_servico:
+      pos: [10, 11]
+      picture: "9(2)"
+      default: 1
+    forma_de_lancamento:
+      pos: [012, 013]
+      picture: "9(002)"
+    numero_da_versao_do_lote:
+      pos: [014, 016]
+      picture: "9(003)"
+    exclusivo_banco_01:
+      pos: [017, 017]
+      picture: "X(001)"
+      default: ""
+    tipo_de_inscricao_da_empresa:
+      pos: [018, 018]
+      picture: "9(001)"
+    numero_de_inscricao_da_empresa:
+      pos: [019, 032]
+      picture: "9(014)"
+    codigo_do_convenio_no_banco:
+      pos: [033, 052]
+      picture: "X(020)"
+    agencia_mantenedora_da_conta:
+      pos: [053, 057]
+      picture: "9(005)"
+    digito_verificador_da_agencia:
+      pos: [058, 058]
+      picture: "X(001)"
+    numero_da_conta_corrente:
+      pos: [059, 070]
+      picture: "9(012)"
+    digito_verificador_da_conta:
+      pos: [071, 071]
+      picture: "X(001)"
+    digito_verificador_da_agencia_conta:
+      pos: [072, 072]
+      picture: "X(001)"
+    nome_da_empresa:
+      pos: [073, 102]
+      picture: "X(030)"
+    mensagem:
+      pos: [103, 142]
+      picture: "X(040)"
+    endereco:
+      pos: [143, 172]
+      picture: "X(030)"
+    numero:
+      pos: [173, 177]
+      picture: "9(005)"
+    complemento_do_endereco:
+      pos: [178, 192]
+      picture: "X(015)"
+    cidade:
+      pos: [193, 212]
+      picture: "X(020)"
+    cep:
+      pos: [213, 217]
+      picture: "9(005)"
+    complemento_do_cep:
+      pos: [218, 220]
+      picture: "9(003)"
+    uf:
+      pos: [221, 222]
+      picture: "X(002)"
+    exclusivo_banco_02:
+      pos: [223, 230]
+      picture: "X(008)"
+      default: ""
+    ocorrencias_para_o_retorno:
+      pos: [231, 240]
+      picture: "X(010)"
+
+  trailer_lote:
+    codigo_banco:
+      pos: [1, 3]
+      picture: "9(3)"
+      default: 33
+    lote_servico:
+      pos: [4, 7]
+      picture: "9(4)"
+    tipo_registro:
+      pos: [8, 8]
+      picture: "9(1)"
+      default: 5
+    exclusivo_banco_01:
+      pos: [9, 17]
+      picture: "X(9)"
+      default: ""
+    quantidade_registros:
+      pos: [18, 23]
+      picture: "9(6)"
+    somatorio_valores:
+      pos: [24, 41]
+      picture: "9(16)"
+    somatorio_quantidade:
+      pos: [42, 59]
+      picture: "9(13)"
+    numero_aviso_debito:
+      pos: [60, 65]
+      picture: "9(6)"
+    exclusivo_banco_02:
+      pos: [66, 230]
+      picture: "X(16)"
+      default: ""
+    ocorrencia_retorno:
+      pos: [231, 240]
+      picture: "X(10)"
+
+  detalhes:
+    segmento_a:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_da_instrucao_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_camara_compensacao:
+        pos: [018, 020]
+        picture: "9(003)"
+      codigo_do_banco_favorecido:
+        pos: [021, 023]
+        picture: "9(003)"
+      codigo_da_agencia_favorecido:
+        pos: [024, 028]
+        picture: "9(005)"
+      digito_verificador_da_agencia:
+        pos: [029, 029]
+        picture: "X(001)"
+      conta_corrente_do_favorecido:
+        pos: [030, 041]
+        picture: "9(012)"
+      digito_verificador_da_conta:
+        pos: [042, 042]
+        picture: "X(001)"
+      digito_verificador_da_agencia_conta:
+        pos: [043, 043]
+        picture: "X(001)"
+      nome_do_favorecido:
+        pos: [044, 073]
+        picture: "X(030)"
+      nro._do_documento_cliente:
+        pos: [074, 093]
+        picture: "X(020)"
+      data_do_pagamento:
+        pos: [094, 101]
+        picture: "9(008)"
+      tipo_da_moeda:
+        pos: [102, 104]
+        picture: "X(003)"
+      quantidade_de_moeda:
+        pos: [105, 119]
+        picture: "9(010)"
+      valor_do_pagamento:
+        pos: [120, 134]
+        picture: "9(013)"
+      nro._do_documento_banco:
+        pos: [135, 154]
+        picture: "X(020)"
+      data_real_do_pagamento:
+        pos: [155, 162]
+        picture: "9(008)"
+      valor_real_do_pagamento:
+        pos: [163, 177]
+        picture: "9(013)"
+      mensagem:
+        pos: [178, 217]
+        picture: "X(040)"
+      finalidade_do_doc:
+        pos: [218, 219]
+        picture: "X(002)"
+      finalidade_de_ted:
+        pos: [220, 224]
+        picture: "X(005)"
+      codigo_finalidade_complementar:
+        pos: [225, 226]
+        picture: "X(002)"
+      exclusivo_banco_01:
+        pos: [227, 229]
+        picture: "X(003)"
+        default: ""
+      emissao_de_aviso_ao_favorecido:
+        pos: [230, 230]
+        picture: "X(001)"
+      ocorrencias_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"
+
+    segmento_b:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      exclusivo_banco_01:
+        pos: [015, 017]
+        picture: "X(003)"
+        default: ""
+      tipo_de_inscricao_do_favorecido:
+        pos: [018, 018]
+        picture: "9(001)"
+      cnpj_cpf_do_favorecido:
+        pos: [019, 032]
+        picture: "9(014)"
+      logradouro_do_favorecido:
+        pos: [033, 062]
+        picture: "X(030)"
+      numero_do_local_do_favorecido:
+        pos: [063, 067]
+        picture: "9(005)"
+      complemento_do_local_favorecido:
+        pos: [068, 082]
+        picture: "X(015)"
+      bairro_do_favorecido:
+        pos: [083, 097]
+        picture: "X(015)"
+      cidade_do_favorecido:
+        pos: [098, 117]
+        picture: "X(020)"
+      cep_do_favorecido:
+        pos: [118, 125]
+        picture: "9(008)"
+      estado_do_favorecido:
+        pos: [126, 127]
+        picture: "X(002)"
+      data_de_vencimento:
+        pos: [128, 135]
+        picture: "9(008)"
+      valor_do_documento:
+        pos: [136, 150]
+        picture: "9(013)"
+      valor_do_abatimento:
+        pos: [151, 165]
+        picture: "9(013)"
+      valor_do_desconto:
+        pos: [166, 180]
+        picture: "9(013)"
+      valor_da_mora:
+        pos: [181, 195]
+        picture: "9(013)"
+      valor_da_multa:
+        pos: [196, 210]
+        picture: "9(013)"
+      horario_de_envio_de_ted:
+        pos: [211, 214]
+        picture: "9(004)"
+      exclusivo_banco_02:
+        pos: [215, 225]
+        picture: "X(011)"
+        default: ""
+      codigo_historico_para_crédito:
+        pos: [226, 229]
+        picture: "9(004)"
+      emissao_de_aviso_ao_favorecido:
+        pos: [230, 230]
+        picture: "9(001)"
+      exclusivo_banco_03:
+        pos: [231, 231]
+        picture: "X(001)"
+        default: ""
+      ted_para_instituicao_financeira:
+        pos: [232, 232]
+        picture: "X(001)"
+      identificacao_da_if_no_spb:
+        pos: [233, 240]
+        picture: "X(008)"
+
+    segmento_j:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_de_instrução_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_de_barras:
+        pos: [018, 061]
+        picture: "X(044)"
+      nome_do_cedente:
+        pos: [062, 091]
+        picture: "X(030)"
+      data_do_vencimento:
+        pos: [092, 099]
+        picture: "9(008)"
+      valor_nominal_do_titulo:
+        pos: [100, 114]
+        picture: "9(013)"
+      valor_desconto_abatimento:
+        pos: [115, 129]
+        picture: "9(013)"
+      valor_multa_juros:
+        pos: [130, 144]
+        picture: "9(013)"
+      data_do_pagamento:
+        pos: [145, 152]
+        picture: "9(008)"
+      valor_do_pagamento:
+        pos: [153, 167]
+        picture: "9(013)"
+      quantidade_de_moeda:
+        pos: [168, 182]
+        picture: "9(010)"
+      numero_do_documento_cliente:
+        pos: [183, 202]
+        picture: "X(020)"
+      numero_do_documento_banco:
+        pos: [203, 222]
+        picture: "X(020)"
+      codigo_da_moeda:
+        pos: [223, 224]
+        picture: "9(002)"
+      exclusivo_banco_01:
+        pos: [225, 230]
+        picture: "X(006)"
+        default: ""
+      ocorrências_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"
+
+    segmento_j_52:
+      codigo_banco:
+        pos: [1, 3]
+        picture: "9(1)"
+        default: 33
+      lote_servico:
+        pos: [4, 7]
+        picture: "9(4)"
+      tipo_registro:
+        pos: [8, 8]
+        picture: "9(1)"
+        default: 3
+      numero_registro:
+        pos: [9, 13]
+        picture: "9(5)"
+      codigo_segmento:
+        pos: [14, 14]
+        picture: "X(1)"
+        default: "P"
+      exclusivo_banco_01:
+        pos: [015, 015]
+        picture: "X(001)"
+        default: ""
+      codigo_de_movimento_remessa:
+        pos: [016, 017]
+        picture: "9(002)"
+      identificacao_registro_:
+        pos: [018, 019]
+        picture: "9(002)"
+      tipo_de_inscricao_01:
+        pos: [020, 020]
+        picture: "9(001)"
+      cpf_cnpj_do_sacado:
+        pos: [021, 035]
+        picture: "9(015)"
+      nome_do_sacado:
+        pos: [036, 075]
+        picture: "X(040)"
+      tipo_de_inscricao_02:
+        pos: [076, 076]
+        picture: "9(001)"
+      cpf_cnpj_do_cedente:
+        pos: [077, 091]
+        picture: "9(015)"
+      nome_do_cedente:
+        pos: [092, 131]
+        picture: "X(040)"
+      tipo_de_inscricao_03:
+        pos: [132, 132]
+        picture: "9(001)"
+      cpf_cnpj_do_sacador:
+        pos: [133, 147]
+        picture: "9(015)"
+      nome_do_sacador:
+        pos: [148, 187]
+        picture: "X(040)"
+      exclusivo_banco_02:
+        pos: [188, 240]
+        picture: "X(053)"
+        default: ""
+
+    segmento_o:
+      codigo_do_banco:
+        pos: [001, 003]
+        picture: "9(003)"
+      lote_de_serviço:
+        pos: [004, 007]
+        picture: "9(004)"
+      tipo_de_registro:
+        pos: [008, 008]
+        picture: "9(001)"
+      numero_sequencial_do_registro_no_lote:
+        pos: [009, 013]
+        picture: "9(005)"
+      codigo_segmento_no_registro_detalhe:
+        pos: [014, 014]
+        picture: "X(001)"
+      tipo_de_movimento:
+        pos: [015, 015]
+        picture: "9(001)"
+      codigo_da_instrução_para_movimento:
+        pos: [016, 017]
+        picture: "9(002)"
+      codigo_de_barras:
+        pos: [018, 061]
+        picture: "X(044)"
+      nome_concessionaria_orgão_publico:
+        pos: [062, 091]
+        picture: "X(030)"
+      data_de_vencimento:
+        pos: [092, 099]
+        picture: "9(008)"
+      data_do_pagamento:
+        pos: [100, 107]
+        picture: "9(008)"
+      valor_total_do_pagamento:
+        pos: [108, 122]
+        picture: "9(013)"
+      nro_do_documento_cliente:
+        pos: [123, 142]
+        picture: "X(020)"
+      nro_do_documento_banco:
+        pos: [143, 162]
+        picture: "X(020)"
+      exclusivo_banco_01:
+        pos: [163, 230]
+        picture: "X(068)"
+        default: ""
+      ocorrências_para_o_retorno:
+        pos: [231, 240]
+        picture: "X(010)"

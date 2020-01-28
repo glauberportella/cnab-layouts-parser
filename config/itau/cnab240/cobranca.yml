@@ -152,8 +152,8 @@ remessa:
       picture: '9(15)'
     brancos_02:
       pos: [34,53]
-      picture: '9(20)'
-      default: 0
+      picture: 'X(20)'
+      default: ''
     zeros_02:
       pos: [54,54]
       picture: '9(1)'
@@ -476,6 +476,7 @@ remessa:
       bairro:
         pos: [114,128]
         picture: 'X(15)'
+        default: ''
       cep:
         pos: [129,133]
         picture: '9(5)'
