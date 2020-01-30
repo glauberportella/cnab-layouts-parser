@@ -55,9 +55,13 @@ class Linha
 			? $this->layout->getRemessaLayout()
 			: $this->layout->getRetornoLayout();
 		$campos = $layout['detalhes'][$segmentoKey];
-		foreach ($campos as $nome => $definicao) {
-			$dados[$nome] = $this->obterValorCampo($definicao);
+		
+		if (isset($campos)) {
+			foreach ($campos as $nome => $definicao) {
+				$dados[$nome] = $this->obterValorCampo($definicao);
+			}
 		}
+
 		return $dados;
 	}
 
