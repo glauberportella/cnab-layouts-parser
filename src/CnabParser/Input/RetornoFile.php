@@ -131,11 +131,9 @@ class RetornoFile extends IntercambioBancarioRetornoFileAbstract
 					);
 					break;
 				case IntercambioBancarioRetornoFileAbstract::REGISTRO_DETALHES:
-					if ($loteAtual == null || $loteAtual != $lote["codigo_lote"]) {
-						$loteAtual = $lote["codigo_lote"];
-						if ($loteAtual != null) {
-							$insert = true;
-						}
+					$loteAtual = $lote["codigo_lote"];
+					if ($loteAtual != null) {
+						$insert = true;
 					}
 
 					$codigoSegmento = $linha->obterValorCampo($defCodigoSegmento);
